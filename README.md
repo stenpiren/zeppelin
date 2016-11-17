@@ -1,227 +1,79 @@
-#Zeppelin
+# Zeppelin for SQL Server
 
-**Documentation:** [User Guide](http://zeppelin.apache.org/docs/latest/index.html)<br/>
-**Mailing Lists:** [User and Dev mailing list](http://zeppelin.apache.org/community.html)<br/>
-**Continuous Integration:** [![Build Status](https://secure.travis-ci.org/apache/zeppelin.png?branch=master)](https://travis-ci.org/apache/zeppelin) <br/>
-**Contributing:** [Contribution Guide](https://github.com/apache/zeppelin/blob/master/CONTRIBUTING.md)<br/>
-**Issue Tracker:** [Jira](https://issues.apache.org/jira/browse/ZEPPELIN)<br/>
-**License:** [Apache 2.0](https://github.com/apache/zeppelin/blob/master/LICENSE)
+This fork of Apache Zeppelin is focused on specific support for SQL Server and SQL Azure. Please refer to Apache Zeppelin main page for general information on the project:
 
+[Apache Zeppelin](https://github.com/apache/zeppelin)
 
-**Zeppelin**, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
+This branch is aligned with the [tag 0.6.2](https://github.com/apache/zeppelin/tree/v0.6.2)
 
-Core feature:
-   * Web based notebook style editor.
-   * Built-in Apache Spark support
+### Project Status
 
-
-To know more about Zeppelin, visit our web site [http://zeppelin.apache.org](http://zeppelin.apache.org)
+[![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=branch-0.6.2)](https://travis-ci.org/yorek/zeppelin)
 
 ## Requirements
- * Git 
- * Java 1.7
- * Tested on Mac OSX, Ubuntu 14.X, CentOS 6.X, Windows 7 Pro SP1
+ * Java 1.8
+ * Tested and Build on Ubuntu 16.04 LTS
  * Maven (if you want to build from the source code)
  * Node.js Package Manager (npm, downloaded by Maven during build phase)
 
 ## Getting Started
 
 ### Before Build
-If you don't have requirements prepared, install it.
-(The installation method may vary according to your environment, example is for Ubuntu.)
+The installation method may vary according to your environment, example is for Ubuntu 16.04 LTS 64bits.
+You can download Ubuntu from here: http://www.ubuntu.com/download/desktop/.
+
+The current version has been built and tested on Ubuntu 16.04 LTS 64bits.
+
+From a terminal shell:
 
 ```
+# install packages
 sudo apt-get update
 sudo apt-get install git
-sudo apt-get install openjdk-7-jdk
+sudo apt-get install openjdk-8-jdk
+sudo apt-get install nodejs
 sudo apt-get install npm
 sudo apt-get install libfontconfig
+sudo apt-get install maven
+
+# get Microsoft JDBC
+curl -L "https://download.microsoft.com/download/0/2/A/02AAE597-3865-456C-AE7F-613F99F850A8/sqljdbc_6.0.6629.101_enu.tar.gz" | tar xz
 ```
 
-#### Proxy settings (optional)
-If you are behind a corporate Proxy with NTLM authentication you can use [Cntlm Authentication Proxy](http://cntlm.sourceforge.net/) .
+### Get Source Code
 
-Before build start, run these commands from shell. 
+Download code from GitHub. From a terminal shell:
+
 ```
-export http_proxy=http://localhost:3128
-export https_proxy=http://localhost:3128
-export HTTP_PROXY=http://localhost:3128
-export HTTPS_PROXY=http://localhost:3128
-npm config set proxy http://localhost:3128
-npm config set https-proxy http://localhost:3128
-npm config set registry "http://registry.npmjs.org/"
-npm config set strict-ssl false
-npm cache clean
-git config --global http.proxy http://localhost:3128
-git config --global https.proxy http://localhost:3128
-git config --global url."http://".insteadOf git://
+git clone --branch=branch-0.5.6 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
 ```
 
-After build is complete, run these commands to cleanup.
-```
-npm config rm proxy
-npm config rm https-proxy
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-git config --global --unset url."http://".insteadOf
-```
-
-_Notes:_ 
- - If you are on Windows replace `export` with `set` to set env variables
- - Replace `localhost:3128` with standard pattern `http://user:pwd@host:port`
- - Git configuration is needed because Bower use it for fetching from GitHub
- 
-#### Install maven
-```
-wget http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
-sudo tar -zxf apache-maven-3.3.3-bin.tar.gz -C /usr/local/
-sudo ln -s /usr/local/apache-maven-3.3.3/bin/mvn /usr/local/bin/mvn
-```
-
-_Notes:_
- - Ensure node is installed by running `node --version`  
- - Ensure maven is running version 3.1.x or higher with `mvn -version`
- - Configure maven to use more memory than usual by `export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m"`
+This will clone the GitHub repository into a folder named ```zeppelin-sqlserver``` in your home directory
 
 ### Build
-If you want to build Zeppelin from the source, please first clone this repository, then:
+
+From a terminal shell:
 
 ```
-mvn clean package -DskipTests [Options]
+export MAVEN_OPTS="-Xmx2g"
+
+mvn install:install-file -Dfile=sqljdbc_6.0/enu/sqljdbc41.jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc41 -Dversion=4.1  -Dpackaging=jar -DgeneratePom=true
+
+cd ~/zeppelin-sqlserver
+
+mvn clean package -DskipTests
+
+cp ./conf/zeppelin-site.xml.template ./conf/zeppelin-site.xml
+cp ./conf/zeppelin-env.sh.template ./conf/zeppelin-env.sh
 ```
 
-Each Interpreter requires different Options.
+Please note that the above commands already contains anything needed in order to make Zeppelin work with SQL Server.
+If you want to have more information on the SQL Server interpreter, you can take a look at the readme in the ```sqlserver``` folder:
 
-
-#### Spark Interpreter
-
-To build with a specific Spark version, Hadoop version or specific features, define one or more of the following profiles and options:
-
-##### `-Pspark-[version]`
-
-Set spark major version
-
-Available profiles are
-
-```
--Pspark-2.0
--Pspark-1.6
--Pspark-1.5
--Pspark-1.4
--Pspark-1.3
--Pspark-1.2
--Pspark-1.1
--Pcassandra-spark-1.5
--Pcassandra-spark-1.4
--Pcassandra-spark-1.3
--Pcassandra-spark-1.2
--Pcassandra-spark-1.1
-```
-
-minor version can be adjusted by `-Dspark.version=x.x.x`
-
-
-##### `-Phadoop-[version]`
-
-set hadoop major version
-
-Available profiles are
-
-```
--Phadoop-0.23
--Phadoop-1
--Phadoop-2.2
--Phadoop-2.3
--Phadoop-2.4
--Phadoop-2.6
-```
-
-minor version can be adjusted by `-Dhadoop.version=x.x.x`
-
-##### `-Pscala-[version] (optional)`
-
-set scala version (default 2.10)
-Available profiles are
-
-```
--Pscala-2.10
--Pscala-2.11
-```
-
-##### `-Pyarn` (optional)
-
-enable YARN support for local mode
-> YARN for local mode is not supported for Spark v1.5.0 or higher. Set `SPARK_HOME` instead.
-
-##### `-Ppyspark` (optional)
-
-enable [PySpark](http://spark.apache.org/docs/latest/api/python/) support for local mode.
-
-##### `-Pr` (optional)
-
-enable [R](https://www.r-project.org/) support with [SparkR](https://spark.apache.org/docs/latest/sparkr.html) integration.
-
-##### `-Psparkr` (optional)
-
-another [R](https://www.r-project.org/) support with [SparkR](https://spark.apache.org/docs/latest/sparkr.html) integration as well as local mode support.
-
-##### `-Pvendor-repo` (optional)
-
-enable 3rd party vendor repository (cloudera)
-
-
-##### `-Pmapr[version]` (optional)
-
-For the MapR Hadoop Distribution, these profiles will handle the Hadoop version. As MapR allows different versions of Spark to be installed, you should specify which version of Spark is installed on the cluster by adding a Spark profile (`-Pspark-1.2`, `-Pspark-1.3`, etc.) as needed.
-The correct Maven artifacts can be found for every version of MapR at http://doc.mapr.com
-
-Available profiles are
-
-```
--Pmapr3
--Pmapr40
--Pmapr41
--Pmapr50
--Pmapr51
-```
-
-
-#### Example
-
-Here're some examples:
-
-```sh
-# build with spark-2.0, scala-2.11
-./dev/change_scala_version.sh 2.11
-mvn clean package -Pspark-2.0 -Phadoop-2.4 -Pyarn -Ppyspark -Psparkr -Pscala-2.11
-
-# build with spark-1.6, scala-2.10
-mvn clean package -Pspark-1.6 -Phadoop-2.4 -Pyarn -Ppyspark -Psparkr
-
-# spark-cassandra integration
-mvn clean package -Pcassandra-spark-1.5 -Dhadoop.version=2.6.0 -Phadoop-2.6 -DskipTests
-
-# with CDH
-mvn clean package -Pspark-1.5 -Dhadoop.version=2.6.0-cdh5.5.0 -Phadoop-2.6 -Pvendor-repo -DskipTests
-
-# with MapR
-mvn clean package -Pspark-1.5 -Pmapr50 -DskipTests
-```
-
-
-#### Ignite Interpreter
-
-```sh
-mvn clean package -Dignite.version=1.6.0 -DskipTests
-```
-
-#### Scalding Interpreter
-
-```sh
-mvn clean package -Pscalding -DskipTests
-```
+[SQL Server Interpreter for Apache Zeppelin](https://github.com/yorek/zeppelin/blob/master/sqlserver/README.md)
 
 ### Configure
+
 If you wish to configure Zeppelin option (like port number), configure the following files:
 
 ```
@@ -229,88 +81,62 @@ If you wish to configure Zeppelin option (like port number), configure the follo
 ./conf/zeppelin-site.xml
 ```
 
-(You can copy `./conf/zeppelin-env.sh.template` into `./conf/zeppelin-env.sh`.
-Same for `zeppelin-site.xml`.)
+### Start Zeppelin
 
+From a terminal shell, start Zeppelin Daemon:
 
-#### Setting SPARK_HOME and HADOOP_HOME
-
-Without `SPARK_HOME` and `HADOOP_HOME`, Zeppelin uses embedded Spark and Hadoop binaries that you have specified with mvn build option.
-If you want to use system provided Spark and Hadoop, export `SPARK_HOME` and `HADOOP_HOME` in `zeppelin-env.sh`.
-You can use any supported version of spark without rebuilding Zeppelin.
-
-```sh
-# ./conf/zeppelin-env.sh
-export SPARK_HOME=...
-export HADOOP_HOME=...
 ```
-
-#### External cluster configuration
-
-Mesos
-
-```sh
-# ./conf/zeppelin-env.sh
-export MASTER=mesos://...
-export ZEPPELIN_JAVA_OPTS="-Dspark.executor.uri=/path/to/spark-*.tgz" or SPARK_HOME="/path/to/spark_home"
-export MESOS_NATIVE_LIBRARY=/path/to/libmesos.so
-```
-
-If you set `SPARK_HOME`, you should deploy spark binary on the same location to all worker nodes. And if you set `spark.executor.uri`, every worker can read that file on its node.
-
-Yarn
-
-```sh
-# ./conf/zeppelin-env.sh
-export SPARK_HOME=/path/to/spark_dir
-```
-
-### Run
-
-```sh
 ./bin/zeppelin-daemon.sh start
 ```
 
-And browse [localhost:8080](localhost:8080) in your browser.
+you can now head to ```http://localhost:8080``` to see Zeppelin running.
 
+## Using Zeppelin
 
-For configuration details check __`./conf`__ subdirectory.
+### Create and configure the Interpreter
 
-### Building for Scala 2.11
+Click on Interpreter menu item so that Zeppelin will show you the Interpreters page.
 
-To produce a Zeppelin package compiled with Scala 2.11, use the -Pscala-2.11 profile:
+#### Change an existing configuration
+
+Scroll to the bottom of the page to find the ```tsql``` interpreter. Click on the ```edit``` button on the right and fill the properties with the values correct for the SQL Server or SQL Azure instance you'd like to connect to. The property ```sqlserver.driver.name``` is already set to the correct value. Change it *only* if you really know what you're doing.
+
+the ```sqserver.url``` parameter is more or less the equivalent of a connection string in .NET. To connect to a local SQL Server it will be something like:
 
 ```
-./dev/change_scala_version.sh 2.11
-mvn clean package -Pspark-1.6 -Phadoop-2.4 -Pyarn -Ppyspark -Pscala-2.11 -DskipTests clean install
+jdbc:sqlserver://<your-local-sql-server-address>:1433
 ```
 
-### Package
-To package the final distribution including the compressed archive, run:
+to connect to SQL Azure it will be similar to:
 
-```sh
-mvn clean package -Pbuild-distr
+```
+jdbc:sqlserver://<your-sql-azure-server-name>.database.windows.net:1433
 ```
 
-To build a distribution with specific profiles, run:
+Now click on save and now you're ready to use the configured SQL Server interpreter in a Notebook.
 
-```sh
-mvn clean package -Pbuild-distr -Pspark-1.5 -Phadoop-2.4 -Pyarn -Ppyspark
+#### Create a new configuration
+
+If you want to create a new SQL Server interpreter to connect to a different SQL Server, just click on the ```+ Create``` button on the top right at the beginning of the page. Type a name for your interpreter, for example, "SQL Server" and from the interpreter drop-down menu select the ```tsql``` item. Now you can follow the same procedure described above to configure your new interpreter.
+
+### Creating a Notebook
+
+On the ```Notebook``` menu, select the ```+ Create new note``` item. Give the notebook the name you prefer, for example "SQL Azure".
+
+Now you have to choose which interpreter you want to use among all the ones available. To do so, click on the gear icon on the right, near the ```default``` button.
+The selected interpreter, which will be available to use in your notebook, will be in light blue. The deselected one will be shown in light gray. You should have all the interpreter already selected. If you want to change something, click one the interpreter you want to enable or disable to do so. Just make sure that the ```tsql``` interpreter is selected. Save your choices by pressing on the ```Save``` button.
+
+### Using a Notebook
+
+Now click on the white box on the top, and you'll be able to write your first query. Something like:
+
+```
+%tsql.sql
+select @@version
 ```
 
-The profiles `-Pspark-1.5 -Phadoop-2.4 -Pyarn -Ppyspark` can be adjusted if you wish to build to a specific spark versions, or omit support such as `yarn`.  
+will be enough to make sure that SQL Server interpreter is working correctly. The first line tells
+Zeppelin that you're going to send something that has to be interpreted by the SQL Server Interpreter. The second one simply ask to SQL Server to return server name and version info.
+Tu run the code, just hit ```Shift + Enter```
 
-The archive is generated under _`zeppelin-distribution/target`_ directory
-
-###Run end-to-end tests
-Zeppelin comes with a set of end-to-end acceptance tests driving headless selenium browser
-
-```sh
-# assumes zeppelin-server running on localhost:8080 (use -Durl=.. to override)
-mvn verify
-
-# or take care of starting/stoping zeppelin-server from packaged zeppelin-distribuion/target
-mvn verify -P using-packaged-distr
-```
-
-[![Analytics](https://ga-beacon.appspot.com/UA-45176241-4/apache/zeppelin/README.md?pixel)](https://github.com/igrigorik/ga-beacon)
+Welcome to the Apache Zeppelin world!
