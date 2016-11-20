@@ -55,26 +55,11 @@
     <module>zeppelin-interpreter</module>
     <module>zeppelin-zengine</module>
     <module>zeppelin-display</module>
-    <module>spark-dependencies</module>
-    <module>spark</module>
     <module>markdown</module>
     <module>angular</module>
     <module>shell</module>
-    <module>livy</module>
-    <module>hbase</module>
-    <module>postgresql</module>
     <module>sqlserver</module>
-    <module>jdbc</module>
-    <module>file</module>
-    <module>flink</module>
-    <module>ignite</module>
-    <module>kylin</module>
     <module>python</module>
-    <module>lens</module>
-    <module>cassandra</module>
-    <module>elasticsearch</module>
-    <module>bigquery</module>
-    <module>alluxio</module>
     <module>zeppelin-web</module>
     <module>zeppelin-server</module>
     <module>zeppelin-distribution</module>
@@ -650,54 +635,11 @@
   </build>
 
   <profiles>
-    <profile>
-      <id>scala-2.10</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <scala.version>2.10.5</scala.version>
-        <scala.binary.version>2.10</scala.binary.version>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>scala-2.11</id>
-      <properties>
-        <scala.version>2.11.7</scala.version>
-        <scala.binary.version>2.11</scala.binary.version>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>vendor-repo</id>
-      <repositories>
-        <repository>
-          <id>cloudera</id>
-          <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-      </repositories>
-    </profile>
-
-    <!-- Geode can be enabled by -Pgeode. see https://issues.apache.org/jira/browse/ZEPPELIN-375 -->
-    <profile>
-      <id>geode</id>
-      <modules>
-        <module>geode</module>
-      </modules>
-    </profile>
 
     <profile>
       <id>r</id>
       <modules>
         <module>r</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>scalding</id>
-      <modules>
-        <module>scalding</module>
       </modules>
     </profile>
 
