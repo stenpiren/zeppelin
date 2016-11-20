@@ -34,3 +34,4 @@ md              org.apache.zeppelin:zeppelin-markdown:0.6.2             Markdown
 postgresql      org.apache.zeppelin:zeppelin-postgresql:0.6.2           Postgresql interpreter
 python          org.apache.zeppelin:zeppelin-python:0.6.2               Python interpreter
 shell           org.apache.zeppelin:zeppelin-shell:0.6.2                Shell command
+sqlserver       org.apache.zeppelin:zeppelin-sqlserver:0.6.2            SQL Server, SQL Azure and SQL Azure DW interpreter
