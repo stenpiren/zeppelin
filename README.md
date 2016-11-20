@@ -8,7 +8,7 @@ This branch is aligned with the [tag 0.6.2](https://github.com/apache/zeppelin/t
 
 ### Project Status
 
-[![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=branch-0.6.2)](https://travis-ci.org/yorek/zeppelin)
+[![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=v0.6.2)](https://travis-ci.org/yorek/zeppelin)
 
 ## Requirements
  * Java 1.8
@@ -45,7 +45,7 @@ curl -L "https://download.microsoft.com/download/0/2/A/02AAE597-3865-456C-AE7F-6
 Download code from GitHub. From a terminal shell:
 
 ```
-git clone --branch=branch-0.6.2 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
+git clone --branch=v0.6.2 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
 ```
 
 This will clone the GitHub repository into a folder named ```zeppelin-sqlserver``` in your home directory
