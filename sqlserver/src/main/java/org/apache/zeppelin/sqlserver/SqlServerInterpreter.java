@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SqlServerInterpreter extends Interpreter
 {
-  private static final String VERSION = "2.1.0.2";
+  private static final String VERSION = "2.2.0.0";
 
   private static final char NEWLINE = '\n';
   private static final char TAB = '\t';
@@ -315,5 +315,13 @@ public class SqlServerInterpreter extends Interpreter
   public List<InterpreterCompletion> completion(String buf, int cursor) {
     List<InterpreterCompletion> result = new ArrayList<>();
     return result;
+
+    SqlServerCompleter sqlCompleter = propertyKeySqlCompleterMap.get(getPropertyKey(buf));
+    if (sqlCompleter != null && sqlCompleter.complete(buf, cursor, candidates) >= 0) {
+      List completion = Lists.transform(candidates, sequenceToStringTransformer);
+      return completion;
+    } else {
+      return NO_COMPLETION;
+    }
   }
 }
