@@ -78,8 +78,8 @@
 
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>sqljdbc41</artifactId>
-      <version>4.1</version>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>6.1.0.jre7</version>
     </dependency>
   </dependencies>
 
