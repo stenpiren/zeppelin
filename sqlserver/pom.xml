@@ -72,6 +72,11 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>sqljdbc41</artifactId>
       <version>4.1</version>

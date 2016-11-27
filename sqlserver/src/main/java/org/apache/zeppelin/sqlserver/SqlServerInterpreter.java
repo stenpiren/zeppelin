@@ -22,14 +22,21 @@ import org.apache.zeppelin.interpreter.thrift.InterpreterCompletion;
 import org.apache.zeppelin.scheduler.Scheduler;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.collect.Sets.SetView;
+import com.google.common.base.Function;
 
 /**
  * SQL Server interpreter v2 for Zeppelin.
@@ -43,11 +50,10 @@ import org.slf4j.LoggerFactory;
  *  Paragraph
  *    Each paragraph has its own connection.
  *    Connection is opened and closed at each execution
-
  */
 public class SqlServerInterpreter extends Interpreter
 {
-  private static final String VERSION = "2.2.0.0";
+  private static final String VERSION = "2.2.1.0";
 
   private static final char NEWLINE = '\n';
   private static final char TAB = '\t';
@@ -76,6 +82,8 @@ public class SqlServerInterpreter extends Interpreter
   private Connection _jdbcGlobalConnection;
   private int _maxRows = 1000;
   private boolean _useNotebookConnection = true;
+
+  List<InterpreterCompletion> _completions = new ArrayList<>();
 
   static {
     Interpreter.register(
@@ -208,8 +216,40 @@ public class SqlServerInterpreter extends Interpreter
     _logger.info(String.format("Connection style: %1s", connectionStyle));
     _useNotebookConnection = !(connectionStyle.toLowerCase().equals(PARAGRAPH_CONNECTION_STYLE));
 
+    _logger.debug("Loading completions");
+
+    String keywords = "";
+    try {
+      String keywordsTSQL = new BufferedReader(new InputStreamReader(
+              SqlServerInterpreter.class.getResourceAsStream("/t-sql.txt"))).readLine();
+
+      keywords += keywordsTSQL.replaceAll("\n", ",").toUpperCase();
+
+      String keywordsODBC = new BufferedReader(new InputStreamReader(
+              SqlServerInterpreter.class.getResourceAsStream("/odbc.txt"))).readLine();
+
+      keywords += "," + keywordsODBC.replaceAll("\n", ",").toUpperCase();
+
+      // Also allow lower-case versions of all the keywords
+      keywords += "," + keywords.toLowerCase();
+
+      StringTokenizer tok = new StringTokenizer(keywords, ", ");
+      while (tok.hasMoreTokens()) {
+        String keyword = tok.nextToken();
+        _completions.add(new InterpreterCompletion(keyword, keyword));
+      }
+
+      _logger.debug(String.format("Done: %1$d keywords added", _completions.size()));
+    }
+    catch (IOException  e)
+    {
+      logger.error("Error while loading keywords", e);
+    }
+
     Connection jdbcConnection = openSQLServerConnection();
     closeSQLServerConnection(jdbcConnection);
+
+    _logger.debug("Done");
   }
 
   @Override
@@ -306,6 +346,8 @@ public class SqlServerInterpreter extends Interpreter
 
   @Override
   public Scheduler getScheduler() {
+    //TODO(davidem): return a FIFO or Parallel scheduler depending on connection type
+
     return SchedulerFactory.singleton().createOrGetFIFOScheduler(
       SqlServerInterpreter.class.getName() + this.hashCode()
     );
@@ -313,15 +355,10 @@ public class SqlServerInterpreter extends Interpreter
 
   @Override
   public List<InterpreterCompletion> completion(String buf, int cursor) {
-    List<InterpreterCompletion> result = new ArrayList<>();
-    return result;
+    logger.debug("completion called");
+    logger.debug(String.format("buf: %1$s", buf));
+    logger.debug(String.format("cursor: %1$d", cursor));
 
-    SqlServerCompleter sqlCompleter = propertyKeySqlCompleterMap.get(getPropertyKey(buf));
-    if (sqlCompleter != null && sqlCompleter.complete(buf, cursor, candidates) >= 0) {
-      List completion = Lists.transform(candidates, sequenceToStringTransformer);
-      return completion;
-    } else {
-      return NO_COMPLETION;
-    }
+    return _completions;
   }
 }
