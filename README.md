@@ -35,9 +35,6 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 sudo apt-get install libfontconfig
 sudo apt-get install maven
-
-# get Microsoft JDBC
-curl -L "https://download.microsoft.com/download/0/2/A/02AAE597-3865-456C-AE7F-613F99F850A8/enu/sqljdbc_6.0.7728.100_enu.tar.gz" | tar xz
 ```
 
 ### Get Source Code
@@ -70,7 +67,7 @@ cp ./conf/zeppelin-env.sh.template ./conf/zeppelin-env.sh
 Please note that the above commands already contains anything needed in order to make Zeppelin work with SQL Server.
 If you want to have more information on the SQL Server interpreter, you can take a look at the readme in the ```sqlserver``` folder:
 
-[SQL Server Interpreter for Apache Zeppelin](https://github.com/yorek/zeppelin/blob/master/sqlserver/README.md)
+[SQL Server Interpreter for Apache Zeppelin](https://github.com/yorek/zeppelin/sqlserver/README.md)
 
 ### Configure
 
@@ -95,19 +92,19 @@ you can now head to ```http://localhost:8080``` to see Zeppelin running.
 
 ### Create and configure the Interpreter
 
-Click on Interpreter menu item so that Zeppelin will show you the Interpreters page.
+Open the Interpreter window by clicking on the "Anonymous" item on the to right and selecing the "Interprepter" menu item so that Zeppelin will show you the Interpreters configuration page.
 
 #### Change an existing configuration
 
-Scroll to the bottom of the page to find the ```tsql``` interpreter. Click on the ```edit``` button on the right and fill the properties with the values correct for the SQL Server or SQL Azure instance you'd like to connect to. The property ```sqlserver.driver.name``` is already set to the correct value. Change it *only* if you really know what you're doing.
+Scroll to the bottom of the page to find the ```sqlserver``` interpreter. Click on the ```edit``` button on the right and fill the properties with the values correct for the SQL Server or SQL Azure instance you'd like to connect to. The property ```sqlserver.driver.name``` is already set to the correct value. Change it *only* if you really know what you're doing.
 
-the ```sqserver.url``` parameter is more or less the equivalent of a connection string in .NET. To connect to a local SQL Server it will be something like:
+the ```sqlserver.url``` parameter is more or less the equivalent of a connection string in .NET. To connect to a local SQL Server it will be something like:
 
 ```
 jdbc:sqlserver://<your-local-sql-server-address>:1433
 ```
 
-to connect to SQL Azure it will be similar to:
+to connect to SQL Azure or SQL Azure DW it will be similar to:
 
 ```
 jdbc:sqlserver://<your-sql-azure-server-name>.database.windows.net:1433
@@ -135,8 +132,8 @@ Now click on the white box on the top, and you'll be able to write your first qu
 select @@version
 ```
 
-will be enough to make sure that SQL Server interpreter is working correctly. The first line tells
-Zeppelin that you're going to send something that has to be interpreted by the SQL Server Interpreter. The second one simply ask to SQL Server to return server name and version info.
+will be enough to make sure that SQL Server interpreter is working correctly. The first line tells Zeppelin that you're going to send something that has to be interpreted by the SQL Server Interpreter. 
+The second one simply ask to SQL Server to return server name and version info. The first line could also be omitted if the SQL Server Interpreter is the first in the list of interpreters bound the the active notebook.
 Tu run the code, just hit ```Shift + Enter```
 
 Welcome to the Apache Zeppelin world!
