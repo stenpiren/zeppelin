@@ -53,7 +53,7 @@ import com.google.common.base.Function;
  */
 public class SqlServerInterpreter extends Interpreter
 {
-  private static final String VERSION = "2.2.1.0";
+  private static final String VERSION = "2.3.0.1";
 
   private static final char NEWLINE = '\n';
   private static final char TAB = '\t';
@@ -119,10 +119,11 @@ public class SqlServerInterpreter extends Interpreter
     } catch (SQLException e)
     {
       _logger.error("Exception trapped while checking if connection is closed", e);
+      return null;
     }
 
     _logger.debug("Opening SQL Server connection");
-    Connection jdbcConnection = null;
+    Connection jdbcConnection;
 
     try
     {
@@ -142,6 +143,7 @@ public class SqlServerInterpreter extends Interpreter
     } catch (ClassNotFoundException | SQLException e)
     {
       _logger.error("Cannot open connection", e);
+      return null;
     }
 
     if (jdbcConnection != null)
@@ -190,13 +192,32 @@ public class SqlServerInterpreter extends Interpreter
     InterpreterResult.Code result = InterpreterResult.Code.SUCCESS;
     StringBuilder resultMessage = new StringBuilder();
 
+    if (cmd.toLowerCase().trim().equals(":help"))
+    {
+      Hashtable<String, String> commands = new Hashtable<>();
+      commands.put("help", "This help");
+      commands.put("info", "Information on used SQL Server interpreter");
+
+      resultMessage
+        .append(TABLE_MAGIC_TAG)
+        .append("MetaCommand").append(TAB).append("Description").append(NEWLINE);
+
+      for (Map.Entry<String, String> command : commands.entrySet())
+      {
+        resultMessage.append(command.getKey()).append(TAB)
+          .append(command.getValue()).append(NEWLINE);
+      }
+    }
+
     if (cmd.toLowerCase().trim().equals(":info"))
     {
       resultMessage
         .append(String.format("Interpreter version: %1s", VERSION))
         .append(NEWLINE)
         .append(String.format("Using notebook connection: %1s", _useNotebookConnection))
-        .append(NEWLINE);
+        .append(NEWLINE)
+        .append(String.format("Apache Zeppelin scheduler type: %1s",
+                _useNotebookConnection ? "FIFO" : "Parallel"));
     }
 
     if (resultMessage.length() == 0)
@@ -244,6 +265,7 @@ public class SqlServerInterpreter extends Interpreter
     catch (IOException  e)
     {
       logger.error("Error while loading keywords", e);
+      _completions = new ArrayList<>();
     }
 
     Connection jdbcConnection = openSQLServerConnection();
@@ -346,11 +368,10 @@ public class SqlServerInterpreter extends Interpreter
 
   @Override
   public Scheduler getScheduler() {
-    //TODO(davidem): return a FIFO or Parallel scheduler depending on connection type
-
-    return SchedulerFactory.singleton().createOrGetFIFOScheduler(
-      SqlServerInterpreter.class.getName() + this.hashCode()
-    );
+    String schedulerName = SqlServerInterpreter.class.getName() + this.hashCode();
+    return _useNotebookConnection ?
+            SchedulerFactory.singleton().createOrGetFIFOScheduler(schedulerName) :
+            SchedulerFactory.singleton().createOrGetParallelScheduler(schedulerName, 10);
   }
 
   @Override

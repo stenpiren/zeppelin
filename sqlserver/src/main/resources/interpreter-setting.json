@@ -40,17 +40,11 @@
         "defaultValue": "1000",
         "description": "Max number of SQL result to display"
       },
-      "zeppelin.sqlserver.concurrent.use": {
+      "sqlserver.connections": {
         "envName": null,
-        "propertyName": "zeppelin.jdbc.concurrent.use",
-        "defaultValue": "true",
-        "description": "Use parallel scheduler"
-      },
-      "zeppelin.sqlserver.concurrent.max_connection": {
-        "envName": null,
-        "propertyName": "zeppelin.jdbc.concurrent.max_connection",
-        "defaultValue": "10",
-        "description": "Number of concurrent execution"
+        "propertyName": "sqlserver.max.result",
+        "defaultValue": "notebook",
+        "description": "Notebook or Paragraph connection style"
       }
     }
   }
