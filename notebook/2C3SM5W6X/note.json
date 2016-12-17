@@ -2,7 +2,7 @@
   "paragraphs": [
     {
       "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.6.2",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -31,14 +31,14 @@
         "msg": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.6.2\u003c/h1\u003e\n"
       },
       "dateCreated": "Nov 20, 2016 9:58:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:03 PM",
-      "dateFinished": "Nov 27, 2016 8:30:05 PM",
+      "dateStarted": "Nov 27, 2016 8:30:03 AM",
+      "dateFinished": "Nov 27, 2016 8:30:05 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "select @@version as SQLVersion",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -77,15 +77,15 @@
         "msg": "SQLVersion\nMicrosoft SQL Server vNext (CTP1) - 14.0.1.246 (X64)   Nov  1 2016 23:24:39   Copyright (c) Microsoft Corporation  on Linux (Ubuntu 16.04.1 LTS)\n"
       },
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:03 PM",
-      "dateFinished": "Nov 27, 2016 8:30:03 PM",
+      "dateStarted": "Nov 27, 2016 8:30:03 AM",
+      "dateFinished": "Nov 27, 2016 8:30:03 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get SQL Server Interpreter version and configuration information",
       "text": ":info",
-      "dateUpdated": "Nov 27, 2016 8:37:39 PM",
+      "dateUpdated": "Nov 27, 2016 8:37:39 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -115,14 +115,14 @@
         "msg": "Interpreter version: 2.3.0.1\nUsing notebook connection: false\nApache Zeppelin scheduler type: Parallel"
       },
       "dateCreated": "Nov 16, 2016 9:46:27 AM",
-      "dateStarted": "Nov 27, 2016 8:37:39 PM",
-      "dateFinished": "Nov 27, 2016 8:37:41 PM",
+      "dateStarted": "Nov 27, 2016 8:37:39 AM",
+      "dateFinished": "Nov 27, 2016 8:37:41 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md \n## MetaCommands \nSQL Server Interpreter supports \"MetaCommands\". \nThey are not T-SQL commands and are used by the Interpreter *only*",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -149,16 +149,16 @@
         "type": "HTML",
         "msg": "\u003ch2\u003eMetaCommands\u003c/h2\u003e\n\u003cp\u003eSQL Server Interpreter supports \u0026ldquo;MetaCommands\u0026rdquo;.\n\u003cbr  /\u003eThey are not T-SQL commands and are used by the Interpreter \u003cem\u003eonly\u003c/em\u003e\u003c/p\u003e\n"
       },
-      "dateCreated": "Nov 27, 2016 8:16:52 PM",
-      "dateStarted": "Nov 27, 2016 8:30:05 PM",
-      "dateFinished": "Nov 27, 2016 8:30:05 PM",
+      "dateCreated": "Nov 27, 2016 8:16:52 AM",
+      "dateStarted": "Nov 27, 2016 8:30:05 AM",
+      "dateFinished": "Nov 27, 2016 8:30:05 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get help on available MetaCommands",
       "text": ":help",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -186,15 +186,15 @@
         "msg": "MetaCommand\tDescription\nhelp\tThis help\ninfo\tInformation on used SQL Server interpreter\n"
       },
       "dateCreated": "Nov 27, 2016 7:53:15 AM",
-      "dateStarted": "Nov 27, 2016 8:30:04 PM",
-      "dateFinished": "Nov 27, 2016 8:30:04 PM",
+      "dateStarted": "Nov 27, 2016 8:30:04 AM",
+      "dateFinished": "Nov 27, 2016 8:30:04 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "View available databases",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Dec 16, 2016 4:43:52 AM",
       "config": {
         "colWidth": 6.0,
         "graph": {
@@ -242,18 +242,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
-        "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\n"
+        "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
       },
       "dateCreated": "Nov 16, 2016 9:57:05 AM",
-      "dateStarted": "Nov 27, 2016 8:30:04 PM",
-      "dateFinished": "Nov 27, 2016 8:30:04 PM",
+      "dateStarted": "Dec 16, 2016 4:43:53 AM",
+      "dateFinished": "Dec 16, 2016 4:43:55 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Databases Recovery Model Overview",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
-      "dateUpdated": "Nov 27, 2016 8:30:03 PM",
+      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 6.0,
         "graph": {
@@ -299,14 +299,14 @@
         "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\n"
       },
       "dateCreated": "Nov 20, 2016 2:29:04 AM",
-      "dateStarted": "Nov 27, 2016 8:30:04 PM",
-      "dateFinished": "Nov 27, 2016 8:30:04 PM",
+      "dateStarted": "Nov 27, 2016 8:30:04 AM",
+      "dateFinished": "Nov 27, 2016 8:30:04 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
-      "dateUpdated": "Nov 27, 2016 8:37:46 PM",
+      "dateUpdated": "Nov 27, 2016 8:37:46 AM",
       "config": {
         "colWidth": 6.0,
         "graph": {
@@ -344,15 +344,15 @@
         "type": "TABLE",
         "msg": "SPID\n52\n"
       },
-      "dateCreated": "Nov 27, 2016 8:25:32 PM",
-      "dateStarted": "Nov 27, 2016 8:37:46 PM",
-      "dateFinished": "Nov 27, 2016 8:37:52 PM",
+      "dateCreated": "Nov 27, 2016 8:25:32 AM",
+      "dateStarted": "Nov 27, 2016 8:37:46 AM",
+      "dateFinished": "Nov 27, 2016 8:37:52 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
-      "dateUpdated": "Nov 27, 2016 8:37:48 PM",
+      "dateUpdated": "Nov 27, 2016 8:37:48 AM",
       "config": {
         "colWidth": 6.0,
         "graph": {
@@ -391,14 +391,14 @@
         "msg": "SPID\n52\n"
       },
       "dateCreated": "Nov 26, 2016 4:20:09 AM",
-      "dateStarted": "Nov 27, 2016 8:37:48 PM",
-      "dateFinished": "Nov 27, 2016 8:37:57 PM",
+      "dateStarted": "Nov 27, 2016 8:37:48 AM",
+      "dateFinished": "Nov 27, 2016 8:37:57 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "",
-      "dateUpdated": "Nov 27, 2016 8:30:04 PM",
+      "text": "DECLARE @json AS NVARCHAR(MAX) \u003d N\u0027{\"syntax-highlighting\": true}\u0027\nSELECT * FROM OPENJSON(@json) WITH\n    (\n    [syntax-highlighting] BIT\n    )\n    \nSELECT * FROM sys.tables",
+      "dateUpdated": "Dec 16, 2016 5:52:21 PM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -411,7 +411,7 @@
           "scatter": {}
         },
         "enabled": true,
-        "editorMode": "ace/mode/scala"
+        "editorMode": "ace/mode/sqlserver"
       },
       "settings": {
         "params": {},
@@ -421,13 +421,39 @@
       "id": "20161127-202727_1369667236",
       "result": {
         "code": "SUCCESS",
-        "type": "TEXT",
-        "msg": "Command executed successfully."
+        "type": "TABLE",
+        "msg": "syntax-highlighting\n1\n"
       },
-      "dateCreated": "Nov 27, 2016 8:27:27 PM",
-      "dateStarted": "Nov 27, 2016 8:30:04 PM",
-      "dateFinished": "Nov 27, 2016 8:30:04 PM",
+      "dateCreated": "Nov 27, 2016 8:27:27 AM",
+      "dateStarted": "Dec 16, 2016 5:27:25 AM",
+      "dateFinished": "Dec 16, 2016 5:27:25 AM",
       "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "dateUpdated": "Dec 16, 2016 5:17:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1481937409680_-159759352",
+      "id": "20161216-171649_1781047893",
+      "dateCreated": "Dec 16, 2016 5:16:49 AM",
+      "status": "READY",
       "progressUpdateIntervalMs": 500
     }
   ],

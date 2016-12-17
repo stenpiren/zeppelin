@@ -82,7 +82,7 @@ angular.module('zeppelinWebApp')
     'ace/mode/python': /^%(\w*\.)?(pyspark|python)\s*$/,
     'ace/mode/scala': /^%(\w*\.)?spark\s*$/,
     'ace/mode/r': /^%(\w*\.)?(r|sparkr|knitr)\s*$/,
-    'ace/mode/sql': /^%(\w*\.)?\wql/,
+    'ace/mode/sqlserver': /^(%tsql)?/,
     'ace/mode/markdown': /^%md/,
     'ace/mode/sh': /^%sh/
   };
@@ -754,8 +754,8 @@ angular.module('zeppelinWebApp')
           if ((typeof pos === 'undefined') && $scope.paragraph.config.editorMode) {
             session.setMode($scope.paragraph.config.editorMode);
           } else {
-            // Defaults to spark mode
-            var newMode = 'ace/mode/scala';
+            // Defaults to tsql mode
+            var newMode = 'ace/mode/sqlserver';
             // Test first against current mode
             var oldMode = session.getMode().$id;
             if (!editorModes[oldMode] || !editorModes[oldMode].test(paragraphText)) {
