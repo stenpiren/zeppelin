@@ -38,7 +38,7 @@
     },
     {
       "text": "select @@version as SQLVersion",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "dateUpdated": "Dec 18, 2016 7:23:45 PM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -63,7 +63,7 @@
           }
         },
         "enabled": true,
-        "editorMode": "ace/mode/scala"
+        "editorMode": "ace/mode/sqlserver"
       },
       "settings": {
         "params": {},
@@ -74,11 +74,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
-        "msg": "SQLVersion\nMicrosoft SQL Server vNext (CTP1) - 14.0.1.246 (X64)   Nov  1 2016 23:24:39   Copyright (c) Microsoft Corporation  on Linux (Ubuntu 16.04.1 LTS)\n"
+        "msg": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.1) - 14.0.100.187 (X64)   Dec 10 2016 02:51:11   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.1 LTS)\n"
       },
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:03 AM",
-      "dateFinished": "Nov 27, 2016 8:30:03 AM",
+      "dateStarted": "Dec 18, 2016 7:23:45 PM",
+      "dateFinished": "Dec 18, 2016 7:23:47 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -398,7 +398,7 @@
     },
     {
       "text": "DECLARE @json AS NVARCHAR(MAX) \u003d N\u0027{\"syntax-highlighting\": true}\u0027\nSELECT * FROM OPENJSON(@json) WITH\n    (\n    [syntax-highlighting] BIT\n    )\n    \nSELECT * FROM sys.tables",
-      "dateUpdated": "Dec 16, 2016 5:52:21 PM",
+      "dateUpdated": "Dec 16, 2016 5:52:21 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
