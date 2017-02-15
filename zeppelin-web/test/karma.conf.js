@@ -3,6 +3,8 @@
 // Generated on 2014-08-29 using
 // generator-karma 0.8.3
 
+var webpackConfig = require('../webpack.config');
+
 module.exports = function(config) {
   'use strict';
 
@@ -35,7 +37,7 @@ module.exports = function(config) {
       'bower_components/ace-builds/src-noconflict/ace.js',
       'bower_components/ace-builds/src-noconflict/mode-scala.js',
       'bower_components/ace-builds/src-noconflict/mode-python.js',
-      'bower_components/ace-builds/src-noconflict/mode-sqlserver.js',
+      'bower_components/ace-builds/src-noconflict/mode-sql.js',
       'bower_components/ace-builds/src-noconflict/mode-markdown.js',
       'bower_components/ace-builds/src-noconflict/mode-sh.js',
       'bower_components/ace-builds/src-noconflict/mode-r.js',
@@ -64,17 +66,22 @@ module.exports = function(config) {
       'bower_components/pikaday/pikaday.js',
       'bower_components/handsontable/dist/handsontable.js',
       'bower_components/moment-duration-format/lib/moment-duration-format.js',
+      'bower_components/select2/dist/js/select2.js',
+      'bower_components/MathJax/MathJax.js',
+      'bower_components/clipboard/dist/clipboard.js',
+      'bower_components/ngclipboard/dist/ngclipboard.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      'src/app/app.js',
-      'src/app/app.controller.js',
-      'src/app/**/*.js',
-      'src/components/**/*.js',
-      'test/spec/**/*.js'
+
+      'src/index.js',
+      // 'test/spec/**/*.js',
+      {pattern: 'test/spec/**/*.js', watched: false},
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+      '.tmp/app/visualization/builtins/*.js'
+    ],
 
     // web server port
     port: 9002,
@@ -93,8 +100,15 @@ module.exports = function(config) {
 
     reporters: ['coverage','progress'],
 
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      stats: 'errors-only'
+    },
+
     preprocessors: {
-      'src/*/{*.js,!(test)/**/*.js}': 'coverage'
+      'src/*/{*.js,!(test)/**/*.js}': 'coverage',
+      'src/index.js': ['webpack', 'sourcemap',],
+      'test/spec/**/*.js': ['webpack', 'sourcemap',],
     },
 
     coverageReporter: {
@@ -107,12 +121,14 @@ module.exports = function(config) {
     plugins: [
       'karma-phantomjs-launcher',
       'karma-jasmine',
-      'karma-coverage'
+      'karma-coverage',
+      'karma-webpack',
+      'karma-sourcemap-loader',
     ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,
 
     colors: true,
 

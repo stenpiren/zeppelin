@@ -1,18 +1,16 @@
-'use strict';
-
 describe('Controller: NotenameCtrl', function() {
-  beforeEach(module('zeppelinWebApp'));
+  beforeEach(angular.mock.module('zeppelinWebApp'));
 
   var scope;
   var ctrl;
-  var notebookList;
+  var noteList;
 
   beforeEach(inject(function($injector, $rootScope, $controller) {
-    notebookList = $injector.get('notebookListDataFactory');
+    noteList = $injector.get('noteListDataFactory');
     scope = $rootScope.$new();
     ctrl = $controller('NotenameCtrl', {
       $scope: scope,
-      notebookListDataFactory: notebookList
+      noteListDataFactory: noteList
     });
   }));
 
@@ -25,7 +23,7 @@ describe('Controller: NotenameCtrl', function() {
       {name: 'Untitled Note 6', id: '4'}
     ];
 
-    notebookList.setNotes(notesList);
+    noteList.setNotes(notesList);
 
     ctrl.sourceNoteName = 'test name';
     expect(ctrl.cloneNoteName()).toEqual('test name 1');

@@ -32,6 +32,12 @@
 </property>
 
 <property>
+  <name>zeppelin.server.ssl.port</name>
+  <value>8443</value>
+  <description>Server ssl port. (used when ssl property is set to true)</description>
+</property>
+
+<property>
   <name>zeppelin.server.context.path</name>
   <value>/</value>
   <description>Context Path of the Web Application</description>
@@ -102,6 +108,16 @@
 </property>
 -->
 
+<!-- provide region of your KMS key -->
+<!-- See http://docs.aws.amazon.com/general/latest/gr/rande.html#kms_region for region codes names -->
+<!--
+<property>
+  <name>zeppelin.notebook.s3.kmsKeyRegion</name>
+  <value>us-east-1</value>
+  <description>AWS KMS key region in your AWS account</description>
+</property>
+-->
+
 <!-- Use a custom encryption materials provider to encrypt data -->
 <!-- No configuration is given to the provider, so you must use system properties or another means to configure -->
 <!-- See https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/EncryptionMaterialsProvider.html -->
@@ -141,11 +157,11 @@
 </property>
 -->
 
-<!-- For versioning your local notebook storage using Git repository
+<!-- Notebook storage layer using local file system
 <property>
   <name>zeppelin.notebook.storage</name>
-  <value>org.apache.zeppelin.notebook.repo.GitNotebookRepo</value>
-  <description>notebook persistence layer implementation</description>
+  <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo</value>
+  <description>local notebook persistence layer implementation</description>
 </property>
 -->
 
@@ -153,15 +169,21 @@
 <!--
 <property>
   <name>zeppelin.notebook.storage</name>
-  <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo, org.apache.zeppelin.notebook.repo.zeppelinhub.ZeppelinHubRepo</value>
-  <description>two notebook persistence layers (local + ZeppelinHub)</description>
+  <value>org.apache.zeppelin.notebook.repo.GitNotebookRepo, org.apache.zeppelin.notebook.repo.zeppelinhub.ZeppelinHubRepo</value>
+  <description>two notebook persistence layers (versioned local + ZeppelinHub)</description>
 </property>
 -->
 
 <property>
   <name>zeppelin.notebook.storage</name>
-  <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo</value>
-  <description>notebook persistence layer implementation</description>
+  <value>org.apache.zeppelin.notebook.repo.GitNotebookRepo</value>
+  <description>versioned notebook persistence layer implementation</description>
+</property>
+
+<property>
+  <name>zeppelin.notebook.one.way.sync</name>
+  <value>false</value>
+  <description>If there are multiple notebook storages, should we treat the first one as the only source of truth?</description>
 </property>
 
 <property>
@@ -178,13 +200,13 @@
 
 <property>
   <name>zeppelin.interpreters</name>
-  <value>org.apache.zeppelin.sqlserver.SqlServerInterpreter,org.apache.zeppelin.markdown.Markdown,org.apache.zeppelin.angular.AngularInterpreter,org.apache.zeppelin.shell.ShellInterpreter,org.apache.zeppelin.python.PythonInterpreter</value>
+  <value>org.apache.zeppelin.spark.SparkInterpreter,org.apache.zeppelin.spark.PySparkInterpreter,org.apache.zeppelin.rinterpreter.RRepl,org.apache.zeppelin.rinterpreter.KnitR,org.apache.zeppelin.spark.SparkRInterpreter,org.apache.zeppelin.spark.SparkSqlInterpreter,org.apache.zeppelin.spark.DepInterpreter,org.apache.zeppelin.markdown.Markdown,org.apache.zeppelin.angular.AngularInterpreter,org.apache.zeppelin.shell.ShellInterpreter,org.apache.zeppelin.file.HDFSFileInterpreter,org.apache.zeppelin.flink.FlinkInterpreter,,org.apache.zeppelin.python.PythonInterpreter,org.apache.zeppelin.python.PythonInterpreterPandasSql,org.apache.zeppelin.python.PythonCondaInterpreter,org.apache.zeppelin.python.PythonDockerInterpreter,org.apache.zeppelin.lens.LensInterpreter,org.apache.zeppelin.ignite.IgniteInterpreter,org.apache.zeppelin.ignite.IgniteSqlInterpreter,org.apache.zeppelin.cassandra.CassandraInterpreter,org.apache.zeppelin.geode.GeodeOqlInterpreter,org.apache.zeppelin.postgresql.PostgreSqlInterpreter,org.apache.zeppelin.jdbc.JDBCInterpreter,org.apache.zeppelin.kylin.KylinInterpreter,org.apache.zeppelin.elasticsearch.ElasticsearchInterpreter,org.apache.zeppelin.scalding.ScaldingInterpreter,org.apache.zeppelin.alluxio.AlluxioInterpreter,org.apache.zeppelin.hbase.HbaseInterpreter,org.apache.zeppelin.livy.LivySparkInterpreter,org.apache.zeppelin.livy.LivyPySparkInterpreter,org.apache.zeppelin.livy.LivyPySpark3Interpreter,org.apache.zeppelin.livy.LivySparkRInterpreter,org.apache.zeppelin.livy.LivySparkSQLInterpreter,org.apache.zeppelin.bigquery.BigQueryInterpreter,org.apache.zeppelin.beam.BeamInterpreter,org.apache.zeppelin.pig.PigInterpreter,org.apache.zeppelin.pig.PigQueryInterpreter,org.apache.zeppelin.scio.ScioInterpreter</value>
   <description>Comma separated interpreter configurations. First interpreter become a default</description>
 </property>
 
 <property>
   <name>zeppelin.interpreter.group.order</name>
-  <value>tsql,md,angular,sh,python</value>
+  <value>spark,md,angular,sh,livy,alluxio,file,psql,flink,python,ignite,lens,cassandra,geode,kylin,elasticsearch,scalding,jdbc,hbase,bigquery,beam</value>
   <description></description>
 </property>
 
@@ -266,10 +288,15 @@
 </property>
 
 <property>
+  <name>zeppelin.notebook.public</name>
+  <value>true</value>
+  <description>Make notebook public by default when created, private otherwise</description>
+</property>
+
+<property>
   <name>zeppelin.websocket.max.text.message.size</name>
   <value>1024000</value>
   <description>Size in characters of the maximum text message to be received by websocket. Defaults to 1024000</description>
 </property>
 
 </configuration>
-

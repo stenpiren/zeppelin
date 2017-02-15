@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Manual upgrade procedure for Zeppelin"
-description: ""
+title: "Manual Zeppelin version upgrade procedure"
+description: "This document will guide you through a procedure of manual upgrade your Apache Zeppelin instance to a newer version. Apache Zeppelin keeps backward compatibility for the notebook file format."
 group: install
 ---
 <!--
@@ -44,3 +44,15 @@ So, copying `notebook` and `conf` directory should be enough.
    ```
    bin/zeppelin-daemon.sh start
    ```
+
+## Migration Guide
+
+### Upgrading from Zeppelin 0.6 to 0.7
+
+ - From 0.7, we don't use `ZEPPELIN_JAVA_OPTS` as default value of `ZEPPELIN_INTP_JAVA_OPTS` and also the same for `ZEPPELIN_MEM`/`ZEPPELIN_INTP_MEM`. If user want to configure the jvm opts of interpreter process, please set `ZEPPELIN_INTP_JAVA_OPTS` and `ZEPPELIN_INTP_MEM` explicitly. If you don't set `ZEPPELIN_INTP_MEM`, Zeppelin will set it to `-Xms1024m -Xmx1024m -XX:MaxPermSize=512m` by default.
+ - Mapping from `%jdbc(prefix)` to `%prefix` is no longer available. Instead, you can use %[interpreter alias] with multiple interpreter setttings on GUI.
+ - Usage of `ZEPPELIN_PORT` is not supported in ssl mode. Instead use `ZEPPELIN_SSL_PORT` to configure the ssl port. Value from `ZEPPELIN_PORT` is used only when `ZEPPELIN_SSL` is set to `false`.
+ - The support on Spark 1.1.x to 1.3.x is deprecated.
+ - From 0.7, we uses `pegdown` as the `markdown.parser.type` option for the `%md` interpreter. Rendered markdown might be different from what you expected
+ - From 0.7 note.json format has been changed to support multiple outputs in a paragraph. Zeppelin will automatically convert old format to new format. 0.6 or lower version can read new note.json format but output will not be displayed. For the detail, see [ZEPPELIN-212](http://issues.apache.org/jira/browse/ZEPPELIN-212) and [pull request](https://github.com/apache/zeppelin/pull/1658).
+ - From 0.7 note storage layer will utilize `GitNotebookRepo` by default instead of `VFSNotebookRepo` storage layer, which is an extension of latter one with versioning capabilities on top of it.

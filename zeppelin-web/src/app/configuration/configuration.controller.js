@@ -11,19 +11,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-angular.module('zeppelinWebApp').controller('ConfigurationCtrl', function($scope, $route, $routeParams, $location,
-                                                                          $rootScope, $http, baseUrlSrv) {
+angular.module('zeppelinWebApp').controller('ConfigurationCtrl', ConfigurationCtrl);
+
+ConfigurationCtrl.$inject = ['$scope', '$rootScope', '$http', 'baseUrlSrv', 'ngToast'];
+
+function ConfigurationCtrl($scope, $rootScope, $http, baseUrlSrv, ngToast) {
   $scope.configrations = [];
   $scope._ = _;
+  ngToast.dismiss();
 
   var getConfigurations = function() {
-    $http.get(baseUrlSrv.getRestApiBase()+'/configurations/all').
+    $http.get(baseUrlSrv.getRestApiBase() + '/configurations/all').
     success(function(data, status, headers, config) {
       $scope.configurations = data.body;
     }).
     error(function(data, status, headers, config) {
+      if (status === 401) {
+        ngToast.danger({
+          content: 'You don\'t have permission on this page',
+          verticalPosition: 'bottom',
+          timeout: '3000'
+        });
+        setTimeout(function() {
+          window.location.replace('/');
+        }, 3000);
+      }
       console.log('Error %o %o', status, data.message);
     });
   };
@@ -33,4 +46,4 @@ angular.module('zeppelinWebApp').controller('ConfigurationCtrl', function($scope
   };
 
   init();
-});
+}

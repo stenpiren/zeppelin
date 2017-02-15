@@ -1,37 +1,39 @@
-'use strict';
-
 describe('Controller: ParagraphCtrl', function() {
 
-  beforeEach(module('zeppelinWebApp'));
+  beforeEach(angular.mock.module('zeppelinWebApp'));
 
-  var ParagraphCtrl;
   var scope;
   var websocketMsgSrvMock = {};
   var paragraphMock = {
     config: {}
+  };
+  var route = {
+    current: {
+      pathParams: {
+        noteId: 'noteId'
+      }
+    }
   };
 
   beforeEach(inject(function($controller, $rootScope) {
     scope = $rootScope.$new();
     $rootScope.notebookScope = $rootScope.$new(true, $rootScope);
 
-    ParagraphCtrl = $controller('ParagraphCtrl', {
+    $controller('ParagraphCtrl', {
       $scope: scope,
       websocketMsgSrv: websocketMsgSrvMock,
-      $element: {}
+      $element: {},
+      $route: route
     });
+
     scope.init(paragraphMock);
   }));
 
   var functions = ['isRunning', 'getIframeDimensions', 'cancelParagraph', 'runParagraph', 'saveParagraph',
     'moveUp', 'moveDown', 'insertNew', 'removeParagraph', 'toggleEditor', 'closeEditor', 'openEditor',
     'closeTable', 'openTable', 'showTitle', 'hideTitle', 'setTitle', 'showLineNumbers', 'hideLineNumbers',
-    'changeColWidth', 'columnWidthClass', 'toggleGraphOption', 'toggleOutput', 'loadForm',
-    'aceChanged', 'aceLoaded', 'getEditorValue', 'getProgress', 'getExecutionTime', 'isResultOutdated',
-    'getResultType', 'loadTableData', 'setGraphMode', 'isGraphMode', 'onGraphOptionChange',
-    'removeGraphOptionKeys', 'removeGraphOptionValues', 'removeGraphOptionGroups', 'setGraphOptionValueAggr',
-    'removeScatterOptionXaxis', 'removeScatterOptionYaxis', 'removeScatterOptionGroup',
-    'removeScatterOptionSize'];
+    'changeColWidth', 'columnWidthClass', 'toggleOutput', 'loadForm',
+    'aceChanged', 'aceLoaded', 'getEditorValue', 'getProgress', 'getExecutionTime', 'isResultOutdated'];
 
   functions.forEach(function(fn) {
     it('check for scope functions to be defined : ' + fn, function() {
@@ -50,35 +52,4 @@ describe('Controller: ParagraphCtrl', function() {
   it('should set default value of "paragraphFocused" as false', function() {
     expect(scope.paragraphFocused).toEqual(false);
   });
-
-  it('should call loadTableData() and getGraphMode() should return "table" when the result type is "TABLE"', function() {
-    scope.getResultType = jasmine.createSpy('getResultType spy').andCallFake(function() {
-      return 'TABLE';
-    });
-    spyOn(scope, 'loadTableData');
-    spyOn(scope, 'setGraphMode');
-    scope.init(paragraphMock);
-    expect(scope.loadTableData).toHaveBeenCalled();
-    expect(scope.setGraphMode).toHaveBeenCalled();
-    expect(scope.getGraphMode()).toEqual('table');
-  });
-
-  it('should call renderHtml() when the result type is "HTML"', function() {
-    scope.getResultType = jasmine.createSpy('getResultType spy').andCallFake(function() {
-      return 'HTML';
-    });
-    spyOn(scope, 'renderHtml');
-    scope.init(paragraphMock);
-    expect(scope.renderHtml).toHaveBeenCalled();
-  });
-
-  it('should call renderAngular() when the result type is "ANGULAR"', function() {
-    scope.getResultType = jasmine.createSpy('getResultType spy').andCallFake(function() {
-      return 'ANGULAR';
-    });
-    spyOn(scope, 'renderAngular');
-    scope.init(paragraphMock);
-    expect(scope.renderAngular).toHaveBeenCalled();
-  });
-
 });

@@ -20,8 +20,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.kylin.KylinInterpreter;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -33,23 +32,50 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class KylinInterpreterTest {
-  @Before
-  public void setUp() throws Exception {
-  }
+  static final Properties kylinProperties = new Properties();
 
-  @After
-  public void tearDown() throws Exception {
+  @BeforeClass
+  public static void setUpClass() {
+    kylinProperties.put("kylin.api.url", "http://localhost:7070/kylin/api/query");
+    kylinProperties.put("kylin.api.user", "ADMIN");
+    kylinProperties.put("kylin.api.password", "KYLIN");
+    kylinProperties.put("kylin.query.project", "default");
+    kylinProperties.put("kylin.query.offset", "0");
+    kylinProperties.put("kylin.query.limit", "5000");
+    kylinProperties.put("kylin.query.ispartial", "true");
   }
 
   @Test
-  public void test(){
-    KylinInterpreter t = new MockKylinInterpreter(new Properties());
+  public void testWithDefault(){
+    KylinInterpreter t = new MockKylinInterpreter(getDefaultProperties());
     InterpreterResult result = t.interpret(
         "select a.date,sum(b.measure) as measure from kylin_fact_table a " +
             "inner join kylin_lookup_table b on a.date=b.date group by a.date", null);
-    assertEquals(InterpreterResult.Type.TABLE,result.type());
+    assertEquals("default", t.getProject("select a.date,sum(b.measure) as measure " +
+                    "from kylin_fact_table a inner join kylin_lookup_table b on a.date=b.date group by a.date"));
+    assertEquals(InterpreterResult.Type.TABLE,result.message().get(0).getType());
+  }
+
+  @Test
+  public void testWithProject(){
+    KylinInterpreter t = new MockKylinInterpreter(getDefaultProperties());
+    assertEquals("project2", t.getProject("(project2)\n select a.date,sum(b.measure) as measure " +
+            "from kylin_fact_table a inner join kylin_lookup_table b on a.date=b.date group by a.date"));
+    assertEquals("", t.getProject("()\n select a.date,sum(b.measure) as measure " +
+            "from kylin_fact_table a inner join kylin_lookup_table b on a.date=b.date group by a.date"));
+  }
+
+  private Properties getDefaultProperties(){
+    Properties prop = new Properties();
+    prop.put("kylin.api.username", "ADMIN");
+    prop.put("kylin.api.password", "KYLIN");
+    prop.put("kylin.api.url", "http://<host>:<port>/kylin/api/query");
+    prop.put("kylin.query.project", "default");
+    prop.put("kylin.query.offset", "0");
+    prop.put("kylin.query.limit", "5000");
+    prop.put("kylin.query.ispartial", "true");
+    return prop;
   }
 }
 

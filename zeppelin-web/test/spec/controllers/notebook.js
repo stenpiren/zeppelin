@@ -1,13 +1,13 @@
-'use strict';
-
 describe('Controller: NotebookCtrl', function() {
-  beforeEach(module('zeppelinWebApp'));
+  beforeEach(angular.mock.module('zeppelinWebApp'));
 
-  var NotebookCtrl;
   var scope;
 
   var websocketMsgSrvMock = {
-    getNotebook: function() {}
+    getNote: function() {},
+    listRevisionHistory: function() {},
+    getInterpreterBindings: function() {},
+    updateNote: function() {}
   };
 
   var baseUrlSrvMock = {
@@ -18,13 +18,13 @@ describe('Controller: NotebookCtrl', function() {
 
   var noteMock = {
     id: 1,
-    name: 'my notebook',
+    name: 'my note',
     config: {},
   };
 
   beforeEach(inject(function($controller, $rootScope) {
     scope = $rootScope.$new();
-    NotebookCtrl = $controller('NotebookCtrl', {
+    $controller('NotebookCtrl', {
       $scope: scope,
       websocketMsgSrv: websocketMsgSrvMock,
       baseUrlSrv: baseUrlSrvMock
@@ -35,19 +35,15 @@ describe('Controller: NotebookCtrl', function() {
     scope.note = noteMock;
   });
 
-  var functions = ['getCronOptionNameFromValue', 'removeNote', 'runNote', 'saveNote', 'toggleAllEditor',
+  var functions = ['getCronOptionNameFromValue', 'removeNote', 'runAllParagraphs', 'saveNote', 'toggleAllEditor',
     'showAllEditor', 'hideAllEditor', 'toggleAllTable', 'hideAllTable', 'showAllTable', 'isNoteRunning',
-    'killSaveTimer', 'startSaveTimer', 'setLookAndFeel', 'setCronScheduler', 'setConfig', 'sendNewName',
+    'killSaveTimer', 'startSaveTimer', 'setLookAndFeel', 'setCronScheduler', 'setConfig', 'updateNoteName',
     'openSetting', 'closeSetting', 'saveSetting', 'toggleSetting'];
 
   functions.forEach(function(fn) {
     it('check for scope functions to be defined : ' + fn, function() {
       expect(scope[fn]).toBeDefined();
     });
-  });
-
-  it('should set default value of "showEditor" to false', function() {
-    expect(scope.showEditor).toEqual(false);
   });
 
   it('should set default value of "editorToggled" to false', function() {
@@ -103,4 +99,40 @@ describe('Controller: NotebookCtrl', function() {
     expect(scope.saveTimer).toEqual(null);
   });
 
+  it('should NOT update note name when updateNoteName() is called with an invalid name', function() {
+    spyOn(websocketMsgSrvMock, 'updateNote');
+    scope.updateNoteName('');
+    expect(scope.note.name).toEqual(noteMock.name);
+    expect(websocketMsgSrvMock.updateNote).not.toHaveBeenCalled();
+    scope.updateNoteName(' ');
+    expect(scope.note.name).toEqual(noteMock.name);
+    expect(websocketMsgSrvMock.updateNote).not.toHaveBeenCalled();
+    scope.updateNoteName(scope.note.name);
+    expect(scope.note.name).toEqual(noteMock.name);
+    expect(websocketMsgSrvMock.updateNote).not.toHaveBeenCalled();
+  });
+
+  it('should update note name when updateNoteName() is called with a valid name', function() {
+    spyOn(websocketMsgSrvMock, 'updateNote');
+    var newName = 'Your Note';
+    scope.updateNoteName(newName);
+    expect(scope.note.name).toEqual(newName);
+    expect(websocketMsgSrvMock.updateNote).toHaveBeenCalled();
+  });
+
+  it('should reload note info once per one "setNoteMenu" event', function() {
+    spyOn(websocketMsgSrvMock, 'getNote');
+    spyOn(websocketMsgSrvMock, 'listRevisionHistory');
+
+    scope.$broadcast('setNoteMenu');
+    expect(websocketMsgSrvMock.getNote.calls.count()).toEqual(1);
+    expect(websocketMsgSrvMock.listRevisionHistory.calls.count()).toEqual(1);
+
+    websocketMsgSrvMock.getNote.calls.reset();
+    websocketMsgSrvMock.listRevisionHistory.calls.reset();
+
+    scope.$broadcast('setNoteMenu');
+    expect(websocketMsgSrvMock.getNote.calls.count()).toEqual(1);
+    expect(websocketMsgSrvMock.listRevisionHistory.calls.count()).toEqual(1);
+  });
 });

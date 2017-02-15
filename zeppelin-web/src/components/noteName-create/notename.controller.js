@@ -12,26 +12,39 @@
  * limitations under the License.
  */
 
-'use strict';
+angular.module('zeppelinWebApp').controller('NotenameCtrl', NotenameCtrl);
 
-angular.module('zeppelinWebApp').controller('NotenameCtrl', function($scope, notebookListDataFactory,
-                                                             $rootScope, $routeParams, websocketMsgSrv) {
+NotenameCtrl.$inject = [
+  '$scope',
+  'noteListDataFactory',
+  '$routeParams',
+  'websocketMsgSrv'
+];
+
+function NotenameCtrl($scope, noteListDataFactory, $routeParams, websocketMsgSrv) {
   var vm = this;
   vm.clone = false;
-  vm.notes = notebookListDataFactory;
+  vm.notes = noteListDataFactory;
   vm.websocketMsgSrv = websocketMsgSrv;
   $scope.note = {};
+  $scope.interpreterSettings = {};
+  $scope.note.defaultInterpreter = null;
 
   vm.createNote = function() {
-      if (!vm.clone) {
-        vm.websocketMsgSrv.createNotebook($scope.note.notename);
-      } else {
-       var noteId = $routeParams.noteId;
-       vm.websocketMsgSrv.cloneNotebook(noteId, $scope.note.notename);
+    if (!vm.clone) {
+      var defaultInterpreterId = '';
+      if ($scope.note.defaultInterpreter !== null) {
+        defaultInterpreterId = $scope.note.defaultInterpreter.id;
       }
+      vm.websocketMsgSrv.createNotebook($scope.note.notename, defaultInterpreterId);
+      $scope.note.defaultInterpreter = $scope.interpreterSettings[0];
+    } else {
+      var noteId = $routeParams.noteId;
+      vm.websocketMsgSrv.cloneNote(noteId, $scope.note.notename);
+    }
   };
 
-  vm.handleNameEnter = function(){
+  vm.handleNameEnter = function() {
     angular.element('#noteNameModal').modal('toggle');
     vm.createNote();
   };
@@ -43,9 +56,9 @@ angular.module('zeppelinWebApp').controller('NotenameCtrl', function($scope, not
     $scope.$apply();
   };
 
-  vm.newNoteName = function () {
+  vm.newNoteName = function() {
     var newCount = 1;
-    angular.forEach(vm.notes.flatList, function (noteName) {
+    angular.forEach(vm.notes.flatList, function(noteName) {
       noteName = noteName.name;
       if (noteName.match(/^Untitled Note [0-9]*$/)) {
         var lastCount = noteName.substr(14) * 1;
@@ -83,4 +96,17 @@ angular.module('zeppelinWebApp').controller('NotenameCtrl', function($scope, not
     return newCloneName + ' ' + copyCount;
   };
 
-});
+  vm.getInterpreterSettings = function() {
+    vm.websocketMsgSrv.getInterpreterSettings();
+  };
+
+
+  $scope.$on('interpreterSettings', function(event, data) {
+    $scope.interpreterSettings = data.interpreterSettings;
+
+    //initialize default interpreter with Spark interpreter
+    $scope.note.defaultInterpreter = data.interpreterSettings[0];
+  });
+
+}
+

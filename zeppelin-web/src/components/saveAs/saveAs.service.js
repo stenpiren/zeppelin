@@ -11,11 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-angular.module('zeppelinWebApp').service('SaveAsService', function(browserDetectService) {
+angular.module('zeppelinWebApp').service('saveAsService', saveAsService);
 
-  this.SaveAs = function(content, filename, extension) {
+saveAsService.$inject = ['browserDetectService'];
+
+function saveAsService(browserDetectService) {
+  this.saveAs = function(content, filename, extension) {
     var BOM = '\uFEFF';
     if (browserDetectService.detectIE()) {
       angular.element('body').append('<iframe id="SaveAsId" style="display: none"></iframe>');
@@ -46,4 +48,5 @@ angular.module('zeppelinWebApp').service('SaveAsService', function(browserDetect
       saveAsElement.remove();
     }
   };
-});
+}
+
