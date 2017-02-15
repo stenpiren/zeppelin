@@ -48,10 +48,6 @@ if [[ -z "${ZEPPELIN_WAR}" ]]; then
   fi
 fi
 
-if [[ -z "$ZEPPELIN_INTERPRETER_DIR" ]]; then
-  export ZEPPELIN_INTERPRETER_DIR="${ZEPPELIN_HOME}/interpreter"
-fi
-
 if [[ -f "${ZEPPELIN_CONF_DIR}/zeppelin-env.sh" ]]; then
   . "${ZEPPELIN_CONF_DIR}/zeppelin-env.sh"
 fi
@@ -135,13 +131,12 @@ if [[ -n "${JAVA_HOME}" ]]; then
 else
   ZEPPELIN_RUNNER=java
 fi
-
 export ZEPPELIN_RUNNER
 
 if [[ -z "$ZEPPELIN_IDENT_STRING" ]]; then
   export ZEPPELIN_IDENT_STRING="${USER}"
 fi
 
-if [[ -z "$DEBUG" ]]; then
-  export DEBUG=0
+if [[ -z "$ZEPPELIN_INTERPRETER_REMOTE_RUNNER" ]]; then
+  export ZEPPELIN_INTERPRETER_REMOTE_RUNNER="bin/interpreter.sh"
 fi

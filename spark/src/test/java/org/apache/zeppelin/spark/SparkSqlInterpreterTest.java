@@ -17,36 +17,38 @@
 
 package org.apache.zeppelin.spark;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Properties;
 
 import org.apache.zeppelin.display.AngularObjectRegistry;
+import org.apache.zeppelin.resource.LocalResourcePool;
 import org.apache.zeppelin.user.AuthenticationInfo;
 import org.apache.zeppelin.display.GUI;
 import org.apache.zeppelin.interpreter.*;
 import org.apache.zeppelin.interpreter.InterpreterResult.Type;
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.rules.TemporaryFolder;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SparkSqlInterpreterTest {
+
+  @Rule
+  public TemporaryFolder tmpDir = new TemporaryFolder();
 
   private SparkSqlInterpreter sql;
   private SparkInterpreter repl;
   private InterpreterContext context;
   private InterpreterGroup intpGroup;
 
-  Logger LOGGER = LoggerFactory.getLogger(SparkSqlInterpreterTest.class);
-
   @Before
   public void setUp() throws Exception {
     Properties p = new Properties();
-    p.putAll(SparkInterpreterTest.getSparkTestProperties());
+    p.putAll(SparkInterpreterTest.getSparkTestProperties(tmpDir));
     p.setProperty("zeppelin.spark.maxResult", "1000");
     p.setProperty("zeppelin.spark.concurrentSQL", "false");
     p.setProperty("zeppelin.spark.sql.stacktrace", "false");
@@ -74,25 +76,11 @@ public class SparkSqlInterpreterTest {
       sql.setInterpreterGroup(intpGroup);
       sql.open();
     }
-    context = new InterpreterContext("note", "id", "title", "text", new AuthenticationInfo(),
+    context = new InterpreterContext("note", "id", null, "title", "text", new AuthenticationInfo(),
         new HashMap<String, Object>(), new GUI(),
         new AngularObjectRegistry(intpGroup.getId(), null),
-        null,
-        new LinkedList<InterpreterContextRunner>(), new InterpreterOutput(new InterpreterOutputListener() {
-      @Override
-      public void onAppend(InterpreterOutput out, byte[] line) {
-
-      }
-
-      @Override
-      public void onUpdate(InterpreterOutput out, byte[] output) {
-
-      }
-    }));
-  }
-
-  @After
-  public void tearDown() throws Exception {
+        new LocalResourcePool("id"),
+        new LinkedList<InterpreterContextRunner>(), new InterpreterOutput(null));
   }
 
   boolean isDataFrameSupported() {
@@ -111,12 +99,12 @@ public class SparkSqlInterpreterTest {
 
     InterpreterResult ret = sql.interpret("select name, age from test where age < 40", context);
     assertEquals(InterpreterResult.Code.SUCCESS, ret.code());
-    assertEquals(Type.TABLE, ret.type());
-    assertEquals("name\tage\nmoon\t33\npark\t34\n", ret.message());
+    assertEquals(Type.TABLE, ret.message().get(0).getType());
+    assertEquals("name\tage\nmoon\t33\npark\t34\n", ret.message().get(0).getData());
 
     ret = sql.interpret("select wrong syntax", context);
     assertEquals(InterpreterResult.Code.ERROR, ret.code());
-    assertTrue(ret.message().length() > 0);
+    assertTrue(ret.message().get(0).getData().length() > 0);
 
     assertEquals(InterpreterResult.Code.SUCCESS, sql.interpret("select case when name==\"aa\" then name else name end from test", context).code());
   }
@@ -172,7 +160,7 @@ public class SparkSqlInterpreterTest {
         "select name, age from people where name = 'gates'", context);
     System.err.println("RET=" + ret.message());
     assertEquals(InterpreterResult.Code.SUCCESS, ret.code());
-    assertEquals(Type.TABLE, ret.type());
-    assertEquals("name\tage\ngates\tnull\n", ret.message());
+    assertEquals(Type.TABLE, ret.message().get(0).getType());
+    assertEquals("name\tage\ngates\tnull\n", ret.message().get(0).getData());
   }
 }

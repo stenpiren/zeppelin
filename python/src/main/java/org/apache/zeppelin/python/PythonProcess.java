@@ -32,7 +32,6 @@ import java.lang.reflect.Field;
  * Object encapsulated interactive
  * Python process (REPL) used by python interpreter
  */
-
 public class PythonProcess {
   private static final Logger logger = LoggerFactory.getLogger(PythonProcess.class);
   private static final String STATEMENT_END = "*!?flush reader!?*";
@@ -41,15 +40,37 @@ public class PythonProcess {
   PrintWriter writer;
   BufferedReader reader;
   Process process;
+
   private String binPath;
+  private String pythonPath;
   private long pid;
 
-  public PythonProcess(String binPath) {
+  public PythonProcess(String binPath, String pythonPath) {
     this.binPath = binPath;
+    this.pythonPath = pythonPath;
   }
 
   public void open() throws IOException {
-    ProcessBuilder builder = new ProcessBuilder(binPath, "-iu");
+    ProcessBuilder builder;
+    boolean hasParams = binPath.split(" ").length > 1;
+    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+      if (hasParams) {
+        builder = new ProcessBuilder(binPath.split(" "));
+      } else {
+        builder = new ProcessBuilder(binPath, "-iu");
+      }
+    } else {
+      String cmd;
+      if (hasParams) {
+        cmd = binPath;
+      } else {
+        cmd = binPath + " -iu";
+      }
+      builder = new ProcessBuilder("bash", "-c", cmd);
+      if (pythonPath != null) {
+        builder.environment().put("PYTHONPATH", pythonPath);
+      }
+    }
 
     builder.redirectErrorStream(true);
     process = builder.start();
@@ -63,22 +84,17 @@ public class PythonProcess {
       logger.warn("Can't find python pid process", e);
       pid = -1;
     }
-
-
   }
 
   public void close() throws IOException {
-
     process.destroy();
     reader.close();
     writer.close();
     stdin.close();
     stdout.close();
-
   }
 
   public void interrupt() throws IOException {
-
     if (pid > -1) {
       logger.info("Sending SIGINT signal to PID : " + pid);
       Runtime.getRuntime().exec("kill -SIGINT " + pid);
@@ -86,8 +102,6 @@ public class PythonProcess {
       logger.warn("Non UNIX/Linux system, close the interpreter");
       close();
     }
-
-
   }
 
   public String sendAndGetResult(String cmd) throws IOException {
@@ -96,25 +110,18 @@ public class PythonProcess {
     writer.println("\"" + STATEMENT_END + "\"");
     StringBuilder output = new StringBuilder();
     String line = null;
-    while (!(line = reader.readLine()).contains(STATEMENT_END)) {
-      logger.debug("Readed line from python shell : " + line);
-      if (line.equals("...")) {
-        logger.warn("Syntax error ! ");
-        output.append("Syntax error ! ");
-        break;
-      }
 
+    while ((line = reader.readLine()) != null &&
+        !line.contains(STATEMENT_END)) {
+      logger.debug("Read line from python shell : " + line);
       output.append(line + "\n");
     }
 
     return output.toString();
-
   }
-
 
   private long findPid() throws NoSuchFieldException, IllegalAccessException {
     long pid = -1;
-
     if (process.getClass().getName().equals("java.lang.UNIXProcess")) {
       Field f = process.getClass().getDeclaredField("pid");
       f.setAccessible(true);
@@ -127,4 +134,5 @@ public class PythonProcess {
   public long getPid() {
     return pid;
   }
+
 }

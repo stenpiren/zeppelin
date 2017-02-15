@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.apache.zeppelin.kylin;
 
 import org.apache.commons.codec.binary.Base64;
@@ -41,7 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Kylin interpreter for Zeppelin. (http://kylin.io)
+ * Kylin interpreter for Zeppelin. (http://kylin.apache.org)
  */
 public class KylinInterpreter extends Interpreter {
   Logger logger = LoggerFactory.getLogger(KylinInterpreter.class);
@@ -56,27 +55,10 @@ public class KylinInterpreter extends Interpreter {
   static final Pattern KYLIN_TABLE_FORMAT_REGEX_LABEL = Pattern.compile("\"label\":\"(.*?)\"");
   static final Pattern KYLIN_TABLE_FORMAT_REGEX = Pattern.compile("\"results\":\\[\\[\"(.*?)\"]]");
 
-  static {
-    Interpreter.register(
-        "kylin",
-        "kylin",
-        KylinInterpreter.class.getName(),
-        new InterpreterPropertyBuilder()
-            .add(KYLIN_USERNAME, "ADMIN", "username for kylin user")
-            .add(KYLIN_PASSWORD, "KYLIN", "password for kylin user")
-            .add(KYLIN_QUERY_API_URL, "http://<host>:<port>/kylin/api/query", "Kylin API.")
-            .add(KYLIN_QUERY_PROJECT, "default", "kylin project name")
-            .add(KYLIN_QUERY_OFFSET, "0", "kylin query offset")
-            .add(KYLIN_QUERY_LIMIT, "5000", "kylin query limit")
-            .add(KYLIN_QUERY_ACCEPT_PARTIAL, "true", "The kylin query partial flag").build());
-  }
-
-
-
-
   public KylinInterpreter(Properties property) {
     super(property);
   }
+
   @Override
   public void open() {
 
@@ -118,8 +100,9 @@ public class KylinInterpreter extends Interpreter {
   }
 
   public HttpResponse prepareRequest(String sql) throws IOException {
-    String KYLIN_PROJECT = getProperty(KYLIN_QUERY_PROJECT);
-    logger.info("project:" + KYLIN_PROJECT);
+    String kylinProject = getProject(KYLIN_QUERY_PROJECT);
+
+    logger.info("project:" + kylinProject);
     logger.info("sql:" + sql);
     logger.info("acceptPartial:" + getProperty(KYLIN_QUERY_ACCEPT_PARTIAL));
     logger.info("limit:" + getProperty(KYLIN_QUERY_LIMIT));
@@ -127,7 +110,7 @@ public class KylinInterpreter extends Interpreter {
     byte[] encodeBytes = Base64.encodeBase64(new String(getProperty(KYLIN_USERNAME)
         + ":" + getProperty(KYLIN_PASSWORD)).getBytes("UTF-8"));
 
-    String postContent = new String("{\"project\":" + "\"" + KYLIN_PROJECT + "\""
+    String postContent = new String("{\"project\":" + "\"" + kylinProject + "\""
         + "," + "\"sql\":" + "\"" + sql + "\""
         + "," + "\"acceptPartial\":" + "\"" + getProperty(KYLIN_QUERY_ACCEPT_PARTIAL) + "\""
         + "," + "\"offset\":" + "\"" + getProperty(KYLIN_QUERY_OFFSET) + "\""
@@ -146,6 +129,22 @@ public class KylinInterpreter extends Interpreter {
 
     HttpClient httpClient = HttpClientBuilder.create().build();
     return httpClient.execute(postRequest);
+  }
+
+  public String getProject(String cmd) {
+    boolean firstLineIndex = cmd.startsWith("(");
+
+    if (firstLineIndex) {
+      int configStartIndex = cmd.indexOf("(");
+      int configLastIndex = cmd.indexOf(")");
+      if (configStartIndex != -1 && configLastIndex != -1) {
+        return cmd.substring(configStartIndex + 1, configLastIndex);
+      } else {
+        return getProperty(KYLIN_QUERY_PROJECT);
+      }
+    } else {
+      return getProperty(KYLIN_QUERY_PROJECT);
+    }
   }
 
   private InterpreterResult executeQuery(String sql) throws IOException {
