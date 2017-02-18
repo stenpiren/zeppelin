@@ -58,7 +58,6 @@
     <module>markdown</module>
     <module>angular</module>
     <module>shell</module>
-    <module>jdbc</module>
     <module>file</module>
     <module>python</module>
     <module>sqlserver</module>

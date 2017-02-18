@@ -1,122 +1,179 @@
 {
   "paragraphs": [
     {
-      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.6.2",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.7",
+      "user": "anonymous",
+      "dateUpdated": "Feb 17, 2017 7:17:24 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
         "editorMode": "ace/mode/markdown",
         "tableHide": false,
-        "editorHide": true
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "keys": [],
+              "values": [],
+              "groups": [],
+              "scatter": {}
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1479664732764_-1485738196",
-      "id": "20161120-095852_1859830438",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.7\u003c/h1\u003e\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "HTML",
         "msg": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.6.2\u003c/h1\u003e\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1479664732764_-1485738196",
+      "id": "20161120-095852_1859830438",
       "dateCreated": "Nov 20, 2016 9:58:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:03 AM",
-      "dateFinished": "Nov 27, 2016 8:30:05 AM",
+      "dateStarted": "Feb 17, 2017 7:17:24 PM",
+      "dateFinished": "Feb 17, 2017 7:17:25 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "select @@version as SQLVersion",
-      "dateUpdated": "Dec 18, 2016 7:23:45 PM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 17, 2017 7:16:22 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 84.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SQLVersion",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SQLVersion",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/text",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 84.0,
+              "optionOpen": false,
+              "keys": [
+                {
+                  "name": "SQLVersion",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [],
+              "groups": [],
+              "scatter": {
+                "xAxis": {
+                  "name": "SQLVersion",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              }
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/sqlserver"
+        ],
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1479361552749_1858238533",
-      "id": "20161116-214552_1314334679",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.2) - 14.0.200.24 (X64)   Jan 10 2017 19:15:28   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.2 LTS)\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.1) - 14.0.100.187 (X64)   Dec 10 2016 02:51:11   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.1 LTS)\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1479361552749_1858238533",
+      "id": "20161116-214552_1314334679",
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Dec 18, 2016 7:23:45 PM",
-      "dateFinished": "Dec 18, 2016 7:23:47 PM",
+      "dateStarted": "Feb 17, 2017 7:16:22 PM",
+      "dateFinished": "Feb 17, 2017 7:16:24 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get SQL Server Interpreter version and configuration information",
       "text": ":info",
-      "dateUpdated": "Nov 27, 2016 8:37:39 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 17, 2017 7:16:32 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
-        "editorMode": "ace/mode/scala",
+        "editorMode": "ace/mode/text",
         "title": true,
         "editorHide": false,
-        "tableHide": false
+        "tableHide": false,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "keys": [],
+              "values": [],
+              "groups": [],
+              "scatter": {}
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1479361587012_450689139",
-      "id": "20161116-214627_163832689",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Interpreter version: 2.3.0.1\nUsing notebook connection: false\nApache Zeppelin scheduler type: Parallel"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
         "msg": "Interpreter version: 2.3.0.1\nUsing notebook connection: false\nApache Zeppelin scheduler type: Parallel"
       },
+      "apps": [],
+      "jobName": "paragraph_1479361587012_450689139",
+      "id": "20161116-214627_163832689",
       "dateCreated": "Nov 16, 2016 9:46:27 AM",
-      "dateStarted": "Nov 27, 2016 8:37:39 AM",
-      "dateFinished": "Nov 27, 2016 8:37:41 AM",
+      "dateStarted": "Feb 17, 2017 7:16:32 PM",
+      "dateFinished": "Feb 17, 2017 7:16:32 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -125,30 +182,44 @@
       "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
         "editorMode": "ace/mode/markdown",
-        "editorHide": true
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "keys": [],
+              "values": [],
+              "groups": [],
+              "scatter": {}
+            }
+          }
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480306612866_2111083877",
-      "id": "20161127-201652_353574130",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch2\u003eMetaCommands\u003c/h2\u003e\n\u003cp\u003eSQL Server Interpreter supports \u0026ldquo;MetaCommands\u0026rdquo;.\n\u003cbr  /\u003eThey are not T-SQL commands and are used by the Interpreter \u003cem\u003eonly\u003c/em\u003e\u003c/p\u003e\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "HTML",
         "msg": "\u003ch2\u003eMetaCommands\u003c/h2\u003e\n\u003cp\u003eSQL Server Interpreter supports \u0026ldquo;MetaCommands\u0026rdquo;.\n\u003cbr  /\u003eThey are not T-SQL commands and are used by the Interpreter \u003cem\u003eonly\u003c/em\u003e\u003c/p\u003e\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1480306612866_2111083877",
+      "id": "20161127-201652_353574130",
       "dateCreated": "Nov 27, 2016 8:16:52 AM",
       "dateStarted": "Nov 27, 2016 8:30:05 AM",
       "dateFinished": "Nov 27, 2016 8:30:05 AM",
@@ -161,30 +232,44 @@
       "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 134.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
         "editorMode": "ace/mode/scala",
-        "title": true
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 134.0,
+              "optionOpen": false,
+              "keys": [],
+              "values": [],
+              "groups": [],
+              "scatter": {}
+            }
+          }
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480305195893_-713984969",
-      "id": "20161127-195315_218042050",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "MetaCommand\tDescription\nhelp\tThis help\ninfo\tInformation on used SQL Server interpreter\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "MetaCommand\tDescription\nhelp\tThis help\ninfo\tInformation on used SQL Server interpreter\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1480305195893_-713984969",
+      "id": "20161127-195315_218042050",
       "dateCreated": "Nov 27, 2016 7:53:15 AM",
       "dateStarted": "Nov 27, 2016 8:30:04 AM",
       "dateFinished": "Nov 27, 2016 8:30:04 AM",
@@ -197,53 +282,67 @@
       "dateUpdated": "Dec 16, 2016 4:43:52 AM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 282.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [
-            {
-              "name": "database_id",
-              "index": 1.0,
-              "aggr": "sum"
-            }
-          ],
-          "groups": [],
-          "scatter": {
-            "yAxis": {
-              "name": "database_id",
-              "index": 1.0,
-              "aggr": "sum"
-            },
-            "xAxis": {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          }
-        },
         "enabled": true,
         "editorMode": "ace/mode/scala",
-        "title": true
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 282.0,
+              "optionOpen": false,
+              "keys": [
+                {
+                  "name": "name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "database_id",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "scatter": {
+                "yAxis": {
+                  "name": "database_id",
+                  "index": 1.0,
+                  "aggr": "sum"
+                },
+                "xAxis": {
+                  "name": "name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              }
+            }
+          }
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1479362225776_1534998551",
-      "id": "20161116-215705_1494708387",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1479362225776_1534998551",
+      "id": "20161116-215705_1494708387",
       "dateCreated": "Nov 16, 2016 9:57:05 AM",
       "dateStarted": "Dec 16, 2016 4:43:53 AM",
       "dateFinished": "Dec 16, 2016 4:43:55 AM",
@@ -256,48 +355,62 @@
       "dateUpdated": "Nov 27, 2016 8:30:03 AM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "pieChart",
-          "height": 297.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "recovery_model_desc",
-              "index": 2.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [
-            {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "count"
-            }
-          ],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          }
-        },
         "enabled": true,
         "editorMode": "ace/mode/scala",
-        "title": true
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "pieChart",
+              "height": 297.0,
+              "optionOpen": false,
+              "keys": [
+                {
+                  "name": "recovery_model_desc",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "name",
+                  "index": 0.0,
+                  "aggr": "count"
+                }
+              ],
+              "groups": [],
+              "scatter": {
+                "xAxis": {
+                  "name": "name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              }
+            }
+          }
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1479680944563_1674690705",
-      "id": "20161120-142904_1193134481",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1479680944563_1674690705",
+      "id": "20161120-142904_1193134481",
       "dateCreated": "Nov 20, 2016 2:29:04 AM",
       "dateStarted": "Nov 27, 2016 8:30:04 AM",
       "dateFinished": "Nov 27, 2016 8:30:04 AM",
@@ -309,41 +422,55 @@
       "dateUpdated": "Nov 27, 2016 8:37:46 AM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 149.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 149.0,
+              "optionOpen": false,
+              "keys": [
+                {
+                  "name": "SPID",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [],
+              "groups": [],
+              "scatter": {
+                "xAxis": {
+                  "name": "SPID",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              }
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala"
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480307132240_-472554249",
-      "id": "20161127-202532_493045606",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SPID\n52\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "SPID\n52\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1480307132240_-472554249",
+      "id": "20161127-202532_493045606",
       "dateCreated": "Nov 27, 2016 8:25:32 AM",
       "dateStarted": "Nov 27, 2016 8:37:46 AM",
       "dateFinished": "Nov 27, 2016 8:37:52 AM",
@@ -355,41 +482,55 @@
       "dateUpdated": "Nov 27, 2016 8:37:48 AM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 143.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 143.0,
+              "optionOpen": false,
+              "keys": [
+                {
+                  "name": "SPID",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [],
+              "groups": [],
+              "scatter": {
+                "xAxis": {
+                  "name": "SPID",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              }
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala"
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480206009214_1578446216",
-      "id": "20161126-162009_1251350634",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SPID\n52\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "SPID\n52\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1480206009214_1578446216",
+      "id": "20161126-162009_1251350634",
       "dateCreated": "Nov 26, 2016 4:20:09 AM",
       "dateStarted": "Nov 27, 2016 8:37:48 AM",
       "dateFinished": "Nov 27, 2016 8:37:57 AM",
@@ -401,29 +542,43 @@
       "dateUpdated": "Dec 16, 2016 5:52:21 AM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
-        "editorMode": "ace/mode/sqlserver"
+        "editorMode": "ace/mode/sqlserver",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "keys": [],
+              "values": [],
+              "groups": [],
+              "scatter": {}
+            }
+          }
+        ]
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480307247971_1157575411",
-      "id": "20161127-202727_1369667236",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "syntax-highlighting\n1\n"
+          }
+        ]
+      },
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
         "msg": "syntax-highlighting\n1\n"
       },
+      "apps": [],
+      "jobName": "paragraph_1480307247971_1157575411",
+      "id": "20161127-202727_1369667236",
       "dateCreated": "Nov 27, 2016 8:27:27 AM",
       "dateStarted": "Dec 16, 2016 5:27:25 AM",
       "dateFinished": "Dec 16, 2016 5:27:25 AM",
@@ -450,6 +605,7 @@
         "params": {},
         "forms": {}
       },
+      "apps": [],
       "jobName": "paragraph_1481937409680_-159759352",
       "id": "20161216-171649_1781047893",
       "dateCreated": "Dec 16, 2016 5:16:49 AM",
