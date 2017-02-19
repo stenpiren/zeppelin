@@ -1,7 +1,7 @@
 [
   {
-    "group": "tsql",
-    "name": "sql",
+    "group": "sqlserver",
+    "name": "sqlserver",
     "className": "org.apache.zeppelin.sqlserver.SqlServerInterpreter",
     "properties": {
       "sqlserver.url": {
@@ -46,6 +46,10 @@
         "defaultValue": "notebook",
         "description": "Notebook or Paragraph connection style"
       }
+    },
+    "editor": {
+      "language": "sqlserver",
+      "editOnDblClick": false
     }
   }
 ]

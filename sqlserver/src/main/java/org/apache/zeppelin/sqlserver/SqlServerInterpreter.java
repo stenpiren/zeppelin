@@ -53,7 +53,7 @@ import com.google.common.base.Function;
  */
 public class SqlServerInterpreter extends Interpreter
 {
-  private static final String VERSION = "2.3.0.1";
+  private static final String VERSION = "0.7.0-1";
 
   private static final char NEWLINE = '\n';
   private static final char TAB = '\t';
@@ -84,24 +84,6 @@ public class SqlServerInterpreter extends Interpreter
   private boolean _useNotebookConnection = true;
 
   List<InterpreterCompletion> _completions = new ArrayList<>();
-
-  static {
-    Interpreter.register(
-      "sql",
-      "tsql",
-      SqlServerInterpreter.class.getName(),
-      new InterpreterPropertyBuilder()
-        .add(SQLSERVER_SERVER_URL, DEFAULT_JDBC_URL, "JDBC URL for SQL Server")
-        .add(SQLSERVER_SERVER_USER, DEFAULT_JDBC_USER_NAME, "SQL Server user name")
-        .add(SQLSERVER_SERVER_PASSWORD, DEFAULT_JDBC_USER_PASSWORD, "SQL Server user password")
-        .add(SQLSERVER_SERVER_DATABASE_NAME, DEFAULT_JDBC_DATABASE_NAME, "SQL Server database")
-        .add(SQLSERVER_SERVER_DRIVER_NAME, DEFAULT_JDBC_DRIVER_NAME, "JDBC Driver Name")
-        .add(SQLSERVER_SERVER_MAX_RESULT, DEFAULT_MAX_RESULT,
-          "Max number of SQL result to display")
-        .add(SQLSERVER_SERVER_CONNECTION_STYLE, DEFAULT_CONNECTION_STYLE,
-          "Notebook or Paragraph connection style")
-        .build());
-  }
 
   public SqlServerInterpreter(Properties property) {
     super(property);

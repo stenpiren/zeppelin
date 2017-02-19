@@ -3,7 +3,7 @@
     {
       "text": "%md\n## Welcome to Zeppelin.\n##### This is a live tutorial, you can run the code yourself. (Shift-Enter to Run)",
       "user": "anonymous",
-      "dateUpdated": "Dec 17, 2016 3:32:15 PM",
+      "dateUpdated": "Feb 18, 2017 4:10:10 PM",
       "config": {
         "colWidth": 12.0,
         "editorHide": true,
@@ -22,19 +22,16 @@
         ],
         "enabled": true,
         "editorSetting": {
-          "language": "markdown",
-          "editOnDblClick": true
+          "language": "text",
+          "editOnDblClick": false
         },
-        "editorMode": "ace/mode/markdown",
+        "editorMode": "ace/mode/text",
         "tableHide": false
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "apps": [],
-      "jobName": "paragraph_1423836981412_-1007008116",
-      "id": "20150213-231621_168813393",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -44,6 +41,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423836981412_-1007008116",
+      "id": "20150213-231621_168813393",
       "dateCreated": "Feb 13, 2015 11:16:21 PM",
       "dateStarted": "Dec 17, 2016 3:32:15 PM",
       "dateFinished": "Dec 17, 2016 3:32:18 PM",
@@ -78,9 +78,6 @@
         "params": {},
         "forms": {}
       },
-      "apps": [],
-      "jobName": "paragraph_1423500779206_-1502780787",
-      "id": "20150210-015259_1403135953",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -90,6 +87,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423500779206_-1502780787",
+      "id": "20150210-015259_1403135953",
       "dateCreated": "Feb 10, 2015 1:52:59 AM",
       "dateStarted": "Dec 17, 2016 3:30:09 PM",
       "dateFinished": "Dec 17, 2016 3:30:58 PM",
@@ -122,9 +122,6 @@
         "params": {},
         "forms": {}
       },
-      "apps": [],
-      "jobName": "paragraph_1423500782552_-1439281894",
-      "id": "20150210-015302_1492795503",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -134,6 +131,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423500782552_-1439281894",
+      "id": "20150210-015302_1492795503",
       "dateCreated": "Feb 10, 2015 1:53:02 AM",
       "dateStarted": "Dec 17, 2016 3:30:13 PM",
       "dateFinished": "Dec 17, 2016 3:31:04 PM",
@@ -174,9 +174,6 @@
           }
         }
       },
-      "apps": [],
-      "jobName": "paragraph_1423720444030_-1424110477",
-      "id": "20150212-145404_867439529",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -186,6 +183,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423720444030_-1424110477",
+      "id": "20150212-145404_867439529",
       "dateCreated": "Feb 12, 2015 2:54:04 PM",
       "dateStarted": "Dec 17, 2016 3:30:58 PM",
       "dateFinished": "Dec 17, 2016 3:31:07 PM",
@@ -237,9 +237,6 @@
           }
         }
       },
-      "apps": [],
-      "jobName": "paragraph_1423836262027_-210588283",
-      "id": "20150213-230422_1600658137",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -249,6 +246,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423836262027_-210588283",
+      "id": "20150213-230422_1600658137",
       "dateCreated": "Feb 13, 2015 11:04:22 PM",
       "dateStarted": "Dec 17, 2016 3:31:05 PM",
       "dateFinished": "Dec 17, 2016 3:31:09 PM",
@@ -283,9 +283,6 @@
         "params": {},
         "forms": {}
       },
-      "apps": [],
-      "jobName": "paragraph_1423836268492_216498320",
-      "id": "20150213-230428_1231780373",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -295,6 +292,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1423836268492_216498320",
+      "id": "20150213-230428_1231780373",
       "dateCreated": "Feb 13, 2015 11:04:28 PM",
       "dateStarted": "Dec 17, 2016 3:30:24 PM",
       "dateFinished": "Dec 17, 2016 3:30:29 PM",
@@ -304,7 +304,7 @@
     {
       "text": "%md\n\nAbout bank data\n\n```\nCitation Request:\n  This dataset is public available for research. The details are described in [Moro et al., 2011]. \n  Please include this citation if you plan to use this database:\n\n  [Moro et al., 2011] S. Moro, R. Laureano and P. Cortez. Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology. \n  In P. Novais et al. (Eds.), Proceedings of the European Simulation and Modelling Conference - ESM\u00272011, pp. 117-121, Guimarães, Portugal, October, 2011. EUROSIS.\n\n  Available at: [pdf] http://hdl.handle.net/1822/14838\n                [bib] http://www3.dsi.uminho.pt/pcortez/bib/2011-esm-1.txt\n```",
       "user": "anonymous",
-      "dateUpdated": "Dec 17, 2016 3:30:34 PM",
+      "dateUpdated": "Feb 18, 2017 4:11:04 PM",
       "config": {
         "colWidth": 12.0,
         "editorHide": true,
@@ -319,19 +319,16 @@
         ],
         "enabled": true,
         "editorSetting": {
-          "language": "markdown",
-          "editOnDblClick": true
+          "language": "text",
+          "editOnDblClick": false
         },
-        "editorMode": "ace/mode/markdown",
+        "editorMode": "ace/mode/text",
         "tableHide": false
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "apps": [],
-      "jobName": "paragraph_1427420818407_872443482",
-      "id": "20150326-214658_12335843",
       "results": {
         "code": "SUCCESS",
         "msg": [
@@ -341,6 +338,9 @@
           }
         ]
       },
+      "apps": [],
+      "jobName": "paragraph_1427420818407_872443482",
+      "id": "20150326-214658_12335843",
       "dateCreated": "Mar 26, 2015 9:46:58 PM",
       "dateStarted": "Dec 17, 2016 3:30:34 PM",
       "dateFinished": "Dec 17, 2016 3:30:34 PM",
@@ -363,27 +363,7 @@
   ],
   "name": "Zeppelin Tutorial/Basic Features (Spark)",
   "id": "2A94M5J1Z",
-  "angularObjects": {
-    "2C6WUGPNH:shared_process": [],
-    "2C4A8RJNB:shared_process": [],
-    "2C4DTK2ZT:shared_process": [],
-    "2C6XKJWBR:shared_process": [],
-    "2C6AHZPMK:shared_process": [],
-    "2C5SU66WQ:shared_process": [],
-    "2C6AMJ98Q:shared_process": [],
-    "2C4AJZK72:shared_process": [],
-    "2C3STPSD7:shared_process": [],
-    "2C4FJN9CK:shared_process": [],
-    "2C3CW6JBY:shared_process": [],
-    "2C5UPQX6Q:shared_process": [],
-    "2C5873KN4:shared_process": [],
-    "2C5719XN4:shared_process": [],
-    "2C52DE5G3:shared_process": [],
-    "2C4G28E63:shared_process": [],
-    "2C6CU96BC:shared_process": [],
-    "2C49A6WY3:shared_process": [],
-    "2C3NE73HG:shared_process": []
-  },
+  "angularObjects": {},
   "config": {
     "looknfeel": "default"
   },
