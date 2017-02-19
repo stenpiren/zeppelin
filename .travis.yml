@@ -17,7 +17,6 @@ language: java
 
 matrix:
   include:
-    # Test all modules
     - jdk: "oraclejdk8"
       env: BUILD_FLAG="package -DskipTests"
 
