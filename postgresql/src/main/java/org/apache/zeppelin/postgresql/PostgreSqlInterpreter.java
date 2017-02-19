@@ -114,10 +114,10 @@ public class PostgreSqlInterpreter extends Interpreter {
 
   private SqlCompleter sqlCompleter;
 
-  private static final Function<CharSequence, String> sequenceToStringTransformer =
-      new Function<CharSequence, String>() {
-        public String apply(CharSequence seq) {
-          return seq.toString();
+  private static final Function<CharSequence, InterpreterCompletion> sequenceToStringTransformer =
+      new Function<CharSequence, InterpreterCompletion>() {
+        public InterpreterCompletion apply(CharSequence seq) {
+          return new InterpreterCompletion(seq.toString(), seq.toString());
         }
       };
 
@@ -324,7 +324,7 @@ public class PostgreSqlInterpreter extends Interpreter {
   @Override
   public List<InterpreterCompletion> completion(String buf, int cursor) {
 
-    List<CharSequence> candidates = new ArrayList<CharSequence>();
+    List<CharSequence> candidates = new ArrayList<>();
     if (sqlCompleter != null && sqlCompleter.complete(buf, cursor, candidates) >= 0) {
       List completion = Lists.transform(candidates, sequenceToStringTransformer);
       return completion;

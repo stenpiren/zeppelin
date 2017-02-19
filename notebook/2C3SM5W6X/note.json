@@ -1,404 +1,459 @@
 {
   "paragraphs": [
     {
-      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.6.2",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.7",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
         "editorMode": "ace/mode/markdown",
         "tableHide": false,
-        "editorHide": true
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.7\u003c/h1\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1479664732764_-1485738196",
       "id": "20161120-095852_1859830438",
-      "result": {
-        "code": "SUCCESS",
-        "type": "HTML",
-        "msg": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.6.2\u003c/h1\u003e\n"
-      },
       "dateCreated": "Nov 20, 2016 9:58:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:03 AM",
-      "dateFinished": "Nov 27, 2016 8:30:05 AM",
+      "dateStarted": "Feb 18, 2017 4:27:37 PM",
+      "dateFinished": "Feb 18, 2017 4:27:39 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "select @@version as SQLVersion",
-      "dateUpdated": "Dec 18, 2016 7:23:45 PM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 84.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SQLVersion",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SQLVersion",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/sqlserver"
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.3) - 14.0.304.138 (X64)   Feb 13 2017 16:49:12   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.2 LTS)\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1479361552749_1858238533",
       "id": "20161116-214552_1314334679",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.1) - 14.0.100.187 (X64)   Dec 10 2016 02:51:11   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.1 LTS)\n"
-      },
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Dec 18, 2016 7:23:45 PM",
-      "dateFinished": "Dec 18, 2016 7:23:47 PM",
+      "dateStarted": "Feb 18, 2017 4:27:37 PM",
+      "dateFinished": "Feb 18, 2017 4:27:40 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get SQL Server Interpreter version and configuration information",
       "text": ":info",
-      "dateUpdated": "Nov 27, 2016 8:37:39 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
-        "editorMode": "ace/mode/scala",
+        "editorMode": "ace/mode/sqlserver",
         "title": true,
         "editorHide": false,
-        "tableHide": false
+        "tableHide": false,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Interpreter version: 0.7.0-1\nUsing notebook connection: false\nApache Zeppelin scheduler type: Parallel"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1479361587012_450689139",
       "id": "20161116-214627_163832689",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TEXT",
-        "msg": "Interpreter version: 2.3.0.1\nUsing notebook connection: false\nApache Zeppelin scheduler type: Parallel"
-      },
       "dateCreated": "Nov 16, 2016 9:46:27 AM",
-      "dateStarted": "Nov 27, 2016 8:37:39 AM",
-      "dateFinished": "Nov 27, 2016 8:37:41 AM",
+      "dateStarted": "Feb 18, 2017 4:27:40 PM",
+      "dateFinished": "Feb 18, 2017 4:27:41 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md \n## MetaCommands \nSQL Server Interpreter supports \"MetaCommands\". \nThey are not T-SQL commands and are used by the Interpreter *only*",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
         "editorMode": "ace/mode/markdown",
-        "editorHide": true
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {}
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch2\u003eMetaCommands\u003c/h2\u003e\n\u003cp\u003eSQL Server Interpreter supports \u0026ldquo;MetaCommands\u0026rdquo;.\n\u003cbr  /\u003eThey are not T-SQL commands and are used by the Interpreter \u003cem\u003eonly\u003c/em\u003e\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1480306612866_2111083877",
       "id": "20161127-201652_353574130",
-      "result": {
-        "code": "SUCCESS",
-        "type": "HTML",
-        "msg": "\u003ch2\u003eMetaCommands\u003c/h2\u003e\n\u003cp\u003eSQL Server Interpreter supports \u0026ldquo;MetaCommands\u0026rdquo;.\n\u003cbr  /\u003eThey are not T-SQL commands and are used by the Interpreter \u003cem\u003eonly\u003c/em\u003e\u003c/p\u003e\n"
-      },
       "dateCreated": "Nov 27, 2016 8:16:52 AM",
-      "dateStarted": "Nov 27, 2016 8:30:05 AM",
-      "dateFinished": "Nov 27, 2016 8:30:05 AM",
+      "dateStarted": "Feb 18, 2017 4:27:39 PM",
+      "dateFinished": "Feb 18, 2017 4:27:39 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get help on available MetaCommands",
       "text": ":help",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:53 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 134.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
         "enabled": true,
-        "editorMode": "ace/mode/scala",
-        "title": true
+        "editorMode": "ace/mode/sqlserver",
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 119.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "MetaCommand\tDescription\nhelp\tThis help\ninfo\tInformation on used SQL Server interpreter\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1480305195893_-713984969",
       "id": "20161127-195315_218042050",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "MetaCommand\tDescription\nhelp\tThis help\ninfo\tInformation on used SQL Server interpreter\n"
-      },
       "dateCreated": "Nov 27, 2016 7:53:15 AM",
-      "dateStarted": "Nov 27, 2016 8:30:04 AM",
-      "dateFinished": "Nov 27, 2016 8:30:04 AM",
+      "dateStarted": "Feb 18, 2017 4:27:41 PM",
+      "dateFinished": "Feb 18, 2017 4:27:41 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "View available databases",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
-      "dateUpdated": "Dec 16, 2016 4:43:52 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 282.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [
-            {
-              "name": "database_id",
-              "index": 1.0,
-              "aggr": "sum"
-            }
-          ],
-          "groups": [],
-          "scatter": {
-            "yAxis": {
-              "name": "database_id",
-              "index": 1.0,
-              "aggr": "sum"
-            },
-            "xAxis": {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala",
-        "title": true
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1479362225776_1534998551",
       "id": "20161116-215705_1494708387",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
-      },
       "dateCreated": "Nov 16, 2016 9:57:05 AM",
-      "dateStarted": "Dec 16, 2016 4:43:53 AM",
-      "dateFinished": "Dec 16, 2016 4:43:55 AM",
+      "dateStarted": "Feb 18, 2017 4:27:41 PM",
+      "dateFinished": "Feb 18, 2017 4:27:41 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Databases Recovery Model Overview",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
-      "dateUpdated": "Nov 27, 2016 8:30:03 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "pieChart",
-          "height": 297.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "recovery_model_desc",
-              "index": 2.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [
-            {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "count"
-            }
-          ],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "name",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "title": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala",
-        "title": true
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1479680944563_1674690705",
       "id": "20161120-142904_1193134481",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\n"
-      },
       "dateCreated": "Nov 20, 2016 2:29:04 AM",
-      "dateStarted": "Nov 27, 2016 8:30:04 AM",
-      "dateFinished": "Nov 27, 2016 8:30:04 AM",
+      "dateStarted": "Feb 18, 2017 4:27:41 PM",
+      "dateFinished": "Feb 18, 2017 4:27:41 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
-      "dateUpdated": "Nov 27, 2016 8:37:46 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 149.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala"
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SPID\n52\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1480307132240_-472554249",
       "id": "20161127-202532_493045606",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "SPID\n52\n"
-      },
       "dateCreated": "Nov 27, 2016 8:25:32 AM",
-      "dateStarted": "Nov 27, 2016 8:37:46 AM",
-      "dateFinished": "Nov 27, 2016 8:37:52 AM",
+      "dateStarted": "Feb 18, 2017 4:27:41 PM",
+      "dateFinished": "Feb 18, 2017 4:27:46 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
-      "dateUpdated": "Nov 27, 2016 8:37:48 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
       "config": {
         "colWidth": 6.0,
-        "graph": {
-          "mode": "table",
-          "height": 143.0,
-          "optionOpen": false,
-          "keys": [
-            {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
-            }
-          ],
-          "values": [],
-          "groups": [],
-          "scatter": {
-            "xAxis": {
-              "name": "SPID",
-              "index": 0.0,
-              "aggr": "sum"
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
             }
           }
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala"
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SPID\n52\n"
+          }
+        ]
+      },
+      "apps": [],
       "jobName": "paragraph_1480206009214_1578446216",
       "id": "20161126-162009_1251350634",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "SPID\n52\n"
-      },
       "dateCreated": "Nov 26, 2016 4:20:09 AM",
-      "dateStarted": "Nov 27, 2016 8:37:48 AM",
-      "dateFinished": "Nov 27, 2016 8:37:57 AM",
+      "dateStarted": "Feb 18, 2017 4:27:42 PM",
+      "dateFinished": "Feb 18, 2017 4:27:51 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "DECLARE @json AS NVARCHAR(MAX) \u003d N\u0027{\"syntax-highlighting\": true}\u0027\nSELECT * FROM OPENJSON(@json) WITH\n    (\n    [syntax-highlighting] BIT\n    )\n    \nSELECT * FROM sys.tables",
-      "dateUpdated": "Dec 16, 2016 5:52:21 AM",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "editorMode": "ace/mode/sqlserver",
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "syntax-highlighting\n1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1480307247971_1157575411",
+      "id": "20161127-202727_1369667236",
+      "dateCreated": "Nov 27, 2016 8:27:27 AM",
+      "dateStarted": "Feb 18, 2017 4:27:47 PM",
+      "dateFinished": "Feb 18, 2017 4:27:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "SELECT DB_NAME() as \u0027DBNAME\u0027\n",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -411,53 +466,62 @@
           "scatter": {}
         },
         "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
+        },
         "editorMode": "ace/mode/sqlserver"
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1480307247971_1157575411",
-      "id": "20161127-202727_1369667236",
-      "result": {
+      "results": {
         "code": "SUCCESS",
-        "type": "TABLE",
-        "msg": "syntax-highlighting\n1\n"
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "DBNAME\ntempdb\n"
+          }
+        ]
       },
-      "dateCreated": "Nov 27, 2016 8:27:27 AM",
-      "dateStarted": "Dec 16, 2016 5:27:25 AM",
-      "dateFinished": "Dec 16, 2016 5:27:25 AM",
+      "apps": [],
+      "jobName": "paragraph_1481937409680_-159759352",
+      "id": "20161216-171649_1781047893",
+      "dateCreated": "Dec 16, 2016 5:16:49 AM",
+      "dateStarted": "Feb 18, 2017 4:27:52 PM",
+      "dateFinished": "Feb 18, 2017 4:27:52 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "",
-      "dateUpdated": "Dec 16, 2016 5:17:05 AM",
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
       "config": {
         "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sqlserver",
+          "editOnDblClick": false
         },
-        "enabled": true
+        "editorMode": "ace/mode/sqlserver"
       },
       "settings": {
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1481937409680_-159759352",
-      "id": "20161216-171649_1781047893",
-      "dateCreated": "Dec 16, 2016 5:16:49 AM",
-      "status": "READY",
+      "apps": [],
+      "jobName": "paragraph_1487462897203_-653712174",
+      "id": "20170218-160817_1408657674",
+      "dateCreated": "Feb 18, 2017 4:08:17 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     }
   ],
-  "name": "SQL Server Sample",
+  "name": "SQL Server/SQL Server Sample",
   "id": "2C3SM5W6X",
   "angularObjects": {
     "2C16ZV4TS:shared_process": [],

@@ -1,4 +1,3 @@
-/* jshint loopfunc: true */
 /*
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -12,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-angular
-  .module('zeppelinWebApp')
-  .controller('SearchResultCtrl', function($scope, $routeParams, searchService) {
+angular.module('zeppelinWebApp').controller('SearchResultCtrl', SearchResultCtrl);
 
+SearchResultCtrl.$inject = ['$scope', '$routeParams', 'searchService'];
+
+function SearchResultCtrl($scope, $routeParams, searchService) {
   $scope.isResult = true ;
   $scope.searchTerm = $routeParams.searchTerm;
   var results = searchService.search({'q': $routeParams.searchTerm}).query();
@@ -31,8 +30,7 @@ angular
       }
 
       note.id = note.id.replace('paragraph/', '?paragraph=') +
-        '&term=' +
-        $routeParams.searchTerm;
+        '&term=' + $routeParams.searchTerm;
 
       return note;
     });
@@ -42,7 +40,7 @@ angular
       $scope.isResult = true;
     }
 
-  $scope.$on('$routeChangeStart', function (event, next, current) {
+    $scope.$on('$routeChangeStart', function(event, next, current) {
       if (next.originalPath !== '/search/:searchTerm') {
         searchService.searchTerm = '';
       }
@@ -65,7 +63,7 @@ angular
         };
 
         return Object.keys(editorModes).reduce(function(res, mode) {
-          return editorModes[mode].test(text)? mode : res;
+          return editorModes[mode].test(text) ? mode : res;
         }, 'ace/mode/scala');
       }
 
@@ -82,7 +80,7 @@ angular
         return function(str) {
           var indeces = [];
           var i = -1;
-          while((i = str.indexOf(term, i + 1)) >= 0) {
+          while ((i = str.indexOf(term, i + 1)) >= 0) {
             indeces.push(i);
           }
           return indeces;
@@ -120,25 +118,25 @@ angular
               _editor
                 .getSession()
                 .addMarker(
-                new Range(row, 0, row, line.length),
-                'search-results-highlight-header',
-                'background'
-              );
+                  new Range(row, 0, row, line.length),
+                  'search-results-highlight-header',
+                  'background'
+                );
               _editor
                 .getSession()
                 .addMarker(
-                new Range(row, start, row, end),
-                'search-results-highlight',
-                'line'
-              );
+                  new Range(row, start, row, end),
+                  'search-results-highlight',
+                  'line'
+                );
             } else {
               _editor
                 .getSession()
                 .addMarker(
-                new Range(row, start, row, end),
-                'search-results-highlight',
-                'line'
-              );
+                  new Range(row, start, row, end),
+                  'search-results-highlight',
+                  'line'
+                );
             }
           });
           return __line;
@@ -154,5 +152,5 @@ angular
 
     };
   };
+}
 
-});

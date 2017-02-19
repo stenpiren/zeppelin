@@ -44,7 +44,7 @@ NC='\033[0m' # No Color
 RELEASE_VERSION="$1"
 GIT_TAG="$2"
 
-PUBLISH_PROFILES="-Ppublish-distr -Pspark-2.0 -Phadoop-2.4 -Pyarn -Ppyspark -Psparkr -Pr"
+PUBLISH_PROFILES="-Ppublish-distr -Pspark-2.1 -Phadoop-2.6 -Pyarn -Ppyspark -Psparkr -Pr"
 PROJECT_OPTIONS="-pl !zeppelin-distribution"
 NEXUS_STAGING="https://repository.apache.org/service/local/staging"
 NEXUS_PROFILE="153446d1ac37c4"
@@ -94,9 +94,9 @@ function publish_to_maven() {
 
   # build with scala-2.10
   echo "mvn clean install -DskipTests \
-    -Dmaven.repo.local=${tmp_repo} -Pscala-2.10 \
+    -Dmaven.repo.local=${tmp_repo} -Pscala-2.10 -Pbeam \
     ${PUBLISH_PROFILES} ${PROJECT_OPTIONS}"
-  mvn clean install -DskipTests -Dmaven.repo.local="${tmp_repo}" -Pscala-2.10 \
+  mvn clean install -DskipTests -Dmaven.repo.local="${tmp_repo}" -Pscala-2.10 -Pbeam \
     ${PUBLISH_PROFILES} ${PROJECT_OPTIONS}
   if [[ $? -ne 0 ]]; then
     echo "Build with scala 2.10 failed."

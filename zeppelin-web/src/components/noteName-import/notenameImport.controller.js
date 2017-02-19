@@ -12,9 +12,11 @@
  * limitations under the License.
  */
 
-'use strict';
+angular.module('zeppelinWebApp').controller('NoteImportCtrl', NoteImportCtrl);
 
-angular.module('zeppelinWebApp').controller('NoteImportCtrl', function($scope, $timeout, websocketMsgSrv) {
+NoteImportCtrl.$inject = ['$scope', '$timeout', 'websocketMsgSrv'];
+
+function NoteImportCtrl($scope, $timeout, websocketMsgSrv) {
   var vm = this;
   $scope.note = {};
   $scope.note.step1 = true;
@@ -79,14 +81,21 @@ angular.module('zeppelinWebApp').controller('NoteImportCtrl', function($scope, $
   vm.importNote = function() {
     $scope.note.errorText = '';
     if ($scope.note.importUrl) {
-      jQuery.getJSON($scope.note.importUrl, function(result) {
-        vm.processImportJson(result);
-      }).fail(function() {
-        $scope.note.errorText = 'Unable to Fetch URL';
-        $scope.$apply();
+      jQuery.ajax({
+        url: $scope.note.importUrl,
+        type: 'GET',
+        dataType: 'json',
+        jsonp: false,
+        xhrFields: {
+          withCredentials: false
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+          $scope.note.errorText = 'Unable to Fetch URL';
+          $scope.$apply();
+        }}).done(function(data) {
+        vm.processImportJson(data);
       });
-    }
-    else {
+    } else {
       $scope.note.errorText = 'Enter URL';
       $scope.$apply();
     }
@@ -109,7 +118,7 @@ angular.module('zeppelinWebApp').controller('NoteImportCtrl', function($scope, $
       } else {
         result.name = $scope.note.noteImportName;
       }
-      websocketMsgSrv.importNotebook(result);
+      websocketMsgSrv.importNote(result);
       //angular.element('#noteImportModal').modal('hide');
     } else {
       $scope.note.errorText = 'Invalid JSON';
@@ -117,9 +126,13 @@ angular.module('zeppelinWebApp').controller('NoteImportCtrl', function($scope, $
     $scope.$apply();
   };
 
+  /*
+   ** $scope.$on functions below
+   */
+
   $scope.$on('setNoteMenu', function(event, notes) {
     vm.resetFlags();
     angular.element('#noteImportModal').modal('hide');
   });
+}
 
-});

@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Logger;
 import org.apache.zeppelin.display.AngularObjectRegistry;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess;
-import org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService;
 import org.apache.zeppelin.resource.ResourcePool;
 import org.apache.zeppelin.scheduler.Scheduler;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
@@ -33,9 +32,10 @@ import org.apache.zeppelin.scheduler.SchedulerFactory;
  * For example spark, pyspark, sql interpreters are in the same 'spark' group
  * and InterpreterGroup will have reference to these all interpreters.
  *
- * Remember, list of interpreters are dedicated to a note.
- * (when InterpreterOption.perNoteSession==true)
- * So InterpreterGroup internally manages map of [noteId, list of interpreters]
+ * Remember, list of interpreters are dedicated to a session. Session could be shared across user
+ * or notes, so the sessionId could be user or noteId or their combination.
+ * So InterpreterGroup internally manages map of [interpreterSessionKey(noteId, user, or
+ * their combination), list of interpreters]
  *
  * A InterpreterGroup runs on interpreter process.
  * And unit of interpreter instantiate, restart, bind, unbind.
@@ -46,6 +46,7 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
   Logger LOGGER = Logger.getLogger(InterpreterGroup.class);
 
   AngularObjectRegistry angularObjectRegistry;
+  InterpreterHookRegistry hookRegistry;
   RemoteInterpreterProcess remoteInterpreterProcess;    // attached remote interpreter process
   ResourcePool resourcePool;
   boolean angularRegistryPushed = false;
@@ -55,7 +56,7 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
   // List<Interpreter>>();
 
   private static final Map<String, InterpreterGroup> allInterpreterGroups =
-      new ConcurrentHashMap<String, InterpreterGroup>();
+      new ConcurrentHashMap<>();
 
   public static InterpreterGroup getByInterpreterGroupId(String id) {
     return allInterpreterGroups.get(id);
@@ -103,15 +104,12 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
   public Properties getProperty() {
     Properties p = new Properties();
 
-    Collection<List<Interpreter>> intpGroupForANote = this.values();
-    if (intpGroupForANote != null && intpGroupForANote.size() > 0) {
-      for (List<Interpreter> intpGroup : intpGroupForANote) {
-        for (Interpreter intp : intpGroup) {
-          p.putAll(intp.getProperty());
-        }
-        // it's okay to break here while every List<Interpreters> will have the same property set
-        break;
+    for (List<Interpreter> intpGroupForASession : this.values()) {
+      for (Interpreter intp : intpGroupForASession) {
+        p.putAll(intp.getProperty());
       }
+      // it's okay to break here while every List<Interpreters> will have the same property set
+      break;
     }
     return p;
   }
@@ -119,9 +117,17 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
   public AngularObjectRegistry getAngularObjectRegistry() {
     return angularObjectRegistry;
   }
-
+  
   public void setAngularObjectRegistry(AngularObjectRegistry angularObjectRegistry) {
     this.angularObjectRegistry = angularObjectRegistry;
+  }
+  
+  public InterpreterHookRegistry getInterpreterHookRegistry() {
+    return hookRegistry;
+  }
+  
+  public void setInterpreterHookRegistry(InterpreterHookRegistry hookRegistry) {
+    this.hookRegistry = hookRegistry;
   }
 
   public RemoteInterpreterProcess getRemoteInterpreterProcess() {
@@ -132,35 +138,50 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
     this.remoteInterpreterProcess = remoteInterpreterProcess;
   }
 
-
-
   /**
    * Close all interpreter instances in this group
    */
   public void close() {
     LOGGER.info("Close interpreter group " + getId());
-    List<Interpreter> intpToClose = new LinkedList<Interpreter>();
-    for (List<Interpreter> intpGroupForNote : this.values()) {
-      intpToClose.addAll(intpGroupForNote);
+    List<Interpreter> intpToClose = new LinkedList<>();
+    for (List<Interpreter> intpGroupForSession : this.values()) {
+      intpToClose.addAll(intpGroupForSession);
     }
     close(intpToClose);
+
+    // make sure remote interpreter process terminates
+    if (remoteInterpreterProcess != null) {
+      while (remoteInterpreterProcess.referenceCount() > 0) {
+        remoteInterpreterProcess.dereference();
+      }
+      remoteInterpreterProcess = null;
+    }
+    allInterpreterGroups.remove(id);
   }
 
   /**
-   * Close all interpreter instances in this group for the note
-   * @param noteId
+   * Close all interpreter instances in this group for the session
+   * @param sessionId
    */
-  public void close(String noteId) {
-    LOGGER.info("Close interpreter group " + getId() + " for note " + noteId);
-    List<Interpreter> intpForNote = this.get(noteId);
-    close(intpForNote);
+  public void close(String sessionId) {
+    LOGGER.info("Close interpreter group " + getId() + " for session: " + sessionId);
+    List<Interpreter> intpForSession = this.get(sessionId);
+    close(intpForSession);
+
+    if (remoteInterpreterProcess != null) {
+      remoteInterpreterProcess.dereference();
+      if (remoteInterpreterProcess.referenceCount() <= 0) {
+        remoteInterpreterProcess = null;
+        allInterpreterGroups.remove(id);
+      }
+    }
   }
 
   private void close(Collection<Interpreter> intpToClose) {
     if (intpToClose == null) {
       return;
     }
-    List<Thread> closeThreads = new LinkedList<Thread>();
+    List<Thread> closeThreads = new LinkedList<>();
 
     for (final Interpreter intp : intpToClose) {
       Thread t = new Thread() {
@@ -188,65 +209,26 @@ public class InterpreterGroup extends ConcurrentHashMap<String, List<Interpreter
   }
 
   /**
-   * Destroy all interpreter instances in this group for the note
-   * @param noteId
+   * Close all interpreter instances in this group
    */
-  public void destroy(String noteId) {
-    LOGGER.info("Destroy interpreter group " + getId() + " for note " + noteId);
-    List<Interpreter> intpForNote = this.get(noteId);
-    destroy(intpForNote);
-  }
-
-
-  /**
-   * Destroy all interpreter instances in this group
-   */
-  public void destroy() {
-    LOGGER.info("Destroy interpreter group " + getId());
-    List<Interpreter> intpToDestroy = new LinkedList<Interpreter>();
-    for (List<Interpreter> intpGroupForNote : this.values()) {
-      intpToDestroy.addAll(intpGroupForNote);
-    }
-    destroy(intpToDestroy);
+  public void shutdown() {
+    LOGGER.info("Close interpreter group " + getId());
 
     // make sure remote interpreter process terminates
     if (remoteInterpreterProcess != null) {
       while (remoteInterpreterProcess.referenceCount() > 0) {
         remoteInterpreterProcess.dereference();
       }
+      remoteInterpreterProcess = null;
     }
-
     allInterpreterGroups.remove(id);
+
+    List<Interpreter> intpToClose = new LinkedList<>();
+    for (List<Interpreter> intpGroupForSession : this.values()) {
+      intpToClose.addAll(intpGroupForSession);
+    }
+    close(intpToClose);
   }
-
-  private void destroy(Collection<Interpreter> intpToDestroy) {
-    if (intpToDestroy == null) {
-      return;
-    }
-
-    List<Thread> destroyThreads = new LinkedList<Thread>();
-
-    for (final Interpreter intp : intpToDestroy) {
-      Thread t = new Thread() {
-        public void run() {
-          intp.destroy();
-        }
-      };
-
-      t.start();
-      destroyThreads.add(t);
-    }
-
-    for (Thread t : destroyThreads) {
-      try {
-        t.join();
-      } catch (InterruptedException e) {
-        LOGGER.error("Can't close interpreter", e);
-      }
-    }
-  }
-
-
 
   public void setResourcePool(ResourcePool resourcePool) {
     this.resourcePool = resourcePool;

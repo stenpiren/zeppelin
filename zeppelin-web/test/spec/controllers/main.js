@@ -1,16 +1,13 @@
-'use strict';
-
 describe('Controller: MainCtrl', function() {
-  beforeEach(module('zeppelinWebApp'));
+  beforeEach(angular.mock.module('zeppelinWebApp'));
 
-  var MainCtrl;
   var scope;
   var rootScope;
 
   beforeEach(inject(function($controller, $rootScope) {
     rootScope = $rootScope;
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    $controller('MainCtrl', {
       $scope: scope
     });
   }));
