@@ -42,7 +42,7 @@ sudo apt-get install maven
 Download code from GitHub. From a terminal shell:
 
 ```
-git clone --branch=v0.6.2 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
+git clone --branch=v0.7 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
 ```
 
 This will clone the GitHub repository into a folder named ```zeppelin-sqlserver``` in your home directory
@@ -52,11 +52,9 @@ This will clone the GitHub repository into a folder named ```zeppelin-sqlserver`
 From a terminal shell:
 
 ```
-export MAVEN_OPTS="-Xmx2g"
-
-mvn install:install-file -Dfile=sqljdbc_6.0/enu/sqljdbc41.jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc41 -Dversion=4.1  -Dpackaging=jar -DgeneratePom=true
-
 cd ~/zeppelin-sqlserver
+
+export MAVEN_OPTS="-Xmx2g"
 
 mvn clean package -DskipTests
 
