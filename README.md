@@ -9,7 +9,7 @@ This branch is aligned with the [branch 0.7](https://github.com/apache/zeppelin/
 
 ## Project Status
 
-[![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=v0.7)](https://travis-ci.org/yorek/zeppelin)
+[![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=master)](https://travis-ci.org/yorek/zeppelin)
 
 ## Requirements
  * Java 1.8
@@ -51,7 +51,7 @@ sudo apt-get install maven
 Download code from GitHub. From a terminal shell:
 
 ```
-git clone --branch=v0.7 https://github.com/yorek/zeppelin.git zeppelin-sqlserver
+git clone https://github.com/yorek/zeppelin.git zeppelin-sqlserver
 ```
 
 This will clone the GitHub repository into a folder named ```zeppelin-sqlserver``` in your home directory
@@ -121,7 +121,7 @@ Now click on save and now you're ready to use the configured SQL Server interpre
 
 #### Create a new configuration
 
-If you want to create a new SQL Server interpreter to connect to a different SQL Server, just click on the ```+ Create``` button on the top right at the beginning of the page. Type a name for your interpreter, for example, "SQL Server" and from the interpreter drop-down menu select the ```tsql``` item. Now you can follow the same procedure described above to configure your new interpreter.
+If you want to create a new SQL Server interpreter to connect to a different SQL Server, just click on the ```+ Create``` button on the top right at the beginning of the page. Type a name for your interpreter, for example, "SQL Server" and from the interpreter drop-down menu select the ```sqlserver``` item. Now you can follow the same procedure described above to configure your new interpreter.
 
 ### Creating a Notebook
 
