@@ -3,7 +3,7 @@
     {
       "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.7",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -41,15 +41,15 @@
       "jobName": "paragraph_1479664732764_-1485738196",
       "id": "20161120-095852_1859830438",
       "dateCreated": "Nov 20, 2016 9:58:52 AM",
-      "dateStarted": "Feb 18, 2017 4:27:37 PM",
-      "dateFinished": "Feb 18, 2017 4:27:39 PM",
+      "dateStarted": "Feb 19, 2017 10:58:52 PM",
+      "dateFinished": "Feb 19, 2017 10:58:54 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "select @@version as SQLVersion",
       "user": "anonymous",
-      "dateUpdated": "Feb 19, 2017 10:43:38 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -73,23 +73,28 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
-        "msg": []
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "SQLVersion\nMicrosoft SQL Azure (RTM) - 12.0.2000.8   Feb  8 2017 04:15:27   Copyright (C) 2016 Microsoft Corporation. All rights reserved. \n"
+          }
+        ]
       },
       "apps": [],
       "jobName": "paragraph_1479361552749_1858238533",
       "id": "20161116-214552_1314334679",
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Feb 19, 2017 10:43:38 PM",
-      "dateFinished": "Feb 19, 2017 10:43:40 PM",
-      "status": "ERROR",
+      "dateStarted": "Feb 19, 2017 10:58:52 PM",
+      "dateFinished": "Feb 19, 2017 10:58:53 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Get SQL Server Interpreter version and configuration information",
       "text": ":info",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -128,15 +133,15 @@
       "jobName": "paragraph_1479361587012_450689139",
       "id": "20161116-214627_163832689",
       "dateCreated": "Nov 16, 2016 9:46:27 AM",
-      "dateStarted": "Feb 18, 2017 4:27:40 PM",
-      "dateFinished": "Feb 18, 2017 4:27:41 PM",
+      "dateStarted": "Feb 19, 2017 10:58:52 PM",
+      "dateFinished": "Feb 19, 2017 10:58:53 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md \n## MetaCommands \nSQL Server Interpreter supports \"MetaCommands\". \nThey are not T-SQL commands and are used by the Interpreter *only*",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -170,8 +175,8 @@
       "jobName": "paragraph_1480306612866_2111083877",
       "id": "20161127-201652_353574130",
       "dateCreated": "Nov 27, 2016 8:16:52 AM",
-      "dateStarted": "Feb 18, 2017 4:27:39 PM",
-      "dateFinished": "Feb 18, 2017 4:27:39 PM",
+      "dateStarted": "Feb 19, 2017 10:58:54 PM",
+      "dateFinished": "Feb 19, 2017 10:58:54 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -179,7 +184,7 @@
       "title": "Get help on available MetaCommands",
       "text": ":help",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:53 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -216,8 +221,8 @@
       "jobName": "paragraph_1480305195893_-713984969",
       "id": "20161127-195315_218042050",
       "dateCreated": "Nov 27, 2016 7:53:15 AM",
-      "dateStarted": "Feb 18, 2017 4:27:41 PM",
-      "dateFinished": "Feb 18, 2017 4:27:41 PM",
+      "dateStarted": "Feb 19, 2017 10:58:53 PM",
+      "dateFinished": "Feb 19, 2017 10:58:53 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -225,7 +230,7 @@
       "title": "View available databases",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 6.0,
         "enabled": true,
@@ -254,7 +259,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tFULL\t130\nWideWorldImportersStandard\t6\tFULL\t130\n"
           }
         ]
       },
@@ -262,8 +267,8 @@
       "jobName": "paragraph_1479362225776_1534998551",
       "id": "20161116-215705_1494708387",
       "dateCreated": "Nov 16, 2016 9:57:05 AM",
-      "dateStarted": "Feb 18, 2017 4:27:41 PM",
-      "dateFinished": "Feb 18, 2017 4:27:41 PM",
+      "dateStarted": "Feb 19, 2017 10:58:53 PM",
+      "dateFinished": "Feb 19, 2017 10:58:53 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -271,7 +276,7 @@
       "title": "Databases Recovery Model Overview",
       "text": "SELECT name, database_id, recovery_model_desc, compatibility_level FROM sys.databases",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:52 PM",
       "config": {
         "colWidth": 6.0,
         "enabled": true,
@@ -300,7 +305,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tSIMPLE\t140\ntempdb\t2\tSIMPLE\t140\nmodel\t3\tFULL\t140\nmsdb\t4\tSIMPLE\t140\nWideWorldImporters\t5\tSIMPLE\t130\n"
+            "data": "name\tdatabase_id\trecovery_model_desc\tcompatibility_level\nmaster\t1\tFULL\t130\nWideWorldImportersStandard\t6\tFULL\t130\n"
           }
         ]
       },
@@ -308,15 +313,15 @@
       "jobName": "paragraph_1479680944563_1674690705",
       "id": "20161120-142904_1193134481",
       "dateCreated": "Nov 20, 2016 2:29:04 AM",
-      "dateStarted": "Feb 18, 2017 4:27:41 PM",
-      "dateFinished": "Feb 18, 2017 4:27:41 PM",
+      "dateStarted": "Feb 19, 2017 10:58:53 PM",
+      "dateFinished": "Feb 19, 2017 10:58:53 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:38 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:53 PM",
       "config": {
         "colWidth": 6.0,
         "enabled": true,
@@ -344,7 +349,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "SPID\n52\n"
+            "data": "SPID\n90\n"
           }
         ]
       },
@@ -352,15 +357,15 @@
       "jobName": "paragraph_1480307132240_-472554249",
       "id": "20161127-202532_493045606",
       "dateCreated": "Nov 27, 2016 8:25:32 AM",
-      "dateStarted": "Feb 18, 2017 4:27:41 PM",
-      "dateFinished": "Feb 18, 2017 4:27:46 PM",
+      "dateStarted": "Feb 19, 2017 10:58:53 PM",
+      "dateFinished": "Feb 19, 2017 10:58:59 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "WAITFOR DELAY \u002700:00:05\u0027;\nSELECT @@SPID as SPID;",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:53 PM",
       "config": {
         "colWidth": 6.0,
         "enabled": true,
@@ -388,7 +393,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "SPID\n52\n"
+            "data": "SPID\n90\n"
           }
         ]
       },
@@ -396,15 +401,15 @@
       "jobName": "paragraph_1480206009214_1578446216",
       "id": "20161126-162009_1251350634",
       "dateCreated": "Nov 26, 2016 4:20:09 AM",
-      "dateStarted": "Feb 18, 2017 4:27:42 PM",
-      "dateFinished": "Feb 18, 2017 4:27:51 PM",
+      "dateStarted": "Feb 19, 2017 10:58:54 PM",
+      "dateFinished": "Feb 19, 2017 10:59:04 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "DECLARE @json AS NVARCHAR(MAX) \u003d N\u0027{\"syntax-highlighting\": true}\u0027\nSELECT * FROM OPENJSON(@json) WITH\n    (\n    [syntax-highlighting] BIT\n    )\n    \nSELECT * FROM sys.tables",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:53 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -440,15 +445,15 @@
       "jobName": "paragraph_1480307247971_1157575411",
       "id": "20161127-202727_1369667236",
       "dateCreated": "Nov 27, 2016 8:27:27 AM",
-      "dateStarted": "Feb 18, 2017 4:27:47 PM",
-      "dateFinished": "Feb 18, 2017 4:27:52 PM",
+      "dateStarted": "Feb 19, 2017 10:58:59 PM",
+      "dateFinished": "Feb 19, 2017 10:59:04 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "SELECT DB_NAME() as \u0027DBNAME\u0027\n",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:53 PM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -477,7 +482,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "DBNAME\ntempdb\n"
+            "data": "DBNAME\nWideWorldImportersStandard\n"
           }
         ]
       },
@@ -485,15 +490,15 @@
       "jobName": "paragraph_1481937409680_-159759352",
       "id": "20161216-171649_1781047893",
       "dateCreated": "Dec 16, 2016 5:16:49 AM",
-      "dateStarted": "Feb 18, 2017 4:27:52 PM",
-      "dateFinished": "Feb 18, 2017 4:27:52 PM",
+      "dateStarted": "Feb 19, 2017 10:59:04 PM",
+      "dateFinished": "Feb 19, 2017 10:59:05 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "\n",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:39 PM",
+      "dateUpdated": "Feb 19, 2017 10:58:53 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
