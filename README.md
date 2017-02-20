@@ -2,11 +2,12 @@
 
 This fork of Apache Zeppelin is focused on specific support for SQL Server and SQL Azure. Please refer to Apache Zeppelin main page for general information on the project:
 
-[Apache Zeppelin](https://github.com/apache/zeppelin)
+- [Apache Zeppelin](https://zeppelin.apache.org/)
+- [GitHub Page](https://github.com/apache/zeppelin)
 
 This branch is aligned with the [branch 0.7](https://github.com/apache/zeppelin/tree/branch-0.7)
 
-### Project Status
+## Project Status
 
 [![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=v0.7)](https://travis-ci.org/yorek/zeppelin)
 
@@ -16,7 +17,15 @@ This branch is aligned with the [branch 0.7](https://github.com/apache/zeppelin/
  * Maven (if you want to build from the source code)
  * Node.js Package Manager (npm, downloaded by Maven during build phase)
 
-## Getting Started
+## Running Apache Zeppelin
+
+If you don't want to *build* Apache Zeppelin, but you just want to use it, you can do it by using the Docker Image:
+
+[Apache Zeppelin for SQL Server Docker Image](https://github.com/yorek/zeppelin-sqlserver-docker)
+
+Once you have Apache Zeppelin running, read the "Using Apache Zeppelin" section below to quickly start playing with it.
+
+## Building Apache Zeppelin
 
 ### Before Build
 The installation method may vary according to your environment, example is for Ubuntu 16.04 LTS 64bits.
@@ -86,7 +95,7 @@ From a terminal shell, start Zeppelin Daemon:
 
 you can now head to ```http://localhost:8080``` to see Zeppelin running.
 
-## Using Zeppelin
+## Using Apache Zeppelin
 
 ### Create and configure the Interpreter
 
@@ -119,14 +128,14 @@ If you want to create a new SQL Server interpreter to connect to a different SQL
 On the ```Notebook``` menu, select the ```+ Create new note``` item. Give the notebook the name you prefer, for example "SQL Azure".
 
 Now you have to choose which interpreter you want to use among all the ones available. To do so, click on the gear icon on the right, near the ```default``` button.
-The selected interpreter, which will be available to use in your notebook, will be in light blue. The deselected one will be shown in light gray. You should have all the interpreter already selected. If you want to change something, click one the interpreter you want to enable or disable to do so. Just make sure that the ```tsql``` interpreter is selected. Save your choices by pressing on the ```Save``` button.
+The selected interpreter, which will be available to use in your notebook, will be in light blue. The deselected one will be shown in light gray. You should have all the interpreter already selected. If you want to change something, click one the interpreter you want to enable or disable to do so. Just make sure that the ```sqlserver``` interpreter is selected. Save your choices by pressing on the ```Save``` button.
 
 ### Using a Notebook
 
 Now click on the white box on the top, and you'll be able to write your first query. Something like:
 
 ```
-%tsql.sql
+%sqlserver
 select @@version
 ```
 
