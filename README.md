@@ -121,7 +121,7 @@ Now click on save and now you're ready to use the configured SQL Server interpre
 
 #### Create a new configuration
 
-If you want to create a new SQL Server interpreter to connect to a different SQL Server, just click on the ```+ Create``` button on the top right at the beginning of the page. Type a name for your interpreter, for example, "SQL Server" and from the interpreter drop-down menu select the ```tsql``` item. Now you can follow the same procedure described above to configure your new interpreter.
+If you want to create a new SQL Server interpreter to connect to a different SQL Server, just click on the ```+ Create``` button on the top right at the beginning of the page. Type a name for your interpreter, for example, "SQL Server" and from the interpreter drop-down menu select the ```sqlserver``` item. Now you can follow the same procedure described above to configure your new interpreter.
 
 ### Creating a Notebook
 
