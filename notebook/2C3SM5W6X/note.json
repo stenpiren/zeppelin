@@ -49,7 +49,7 @@
     {
       "text": "select @@version as SQLVersion",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:27:37 PM",
+      "dateUpdated": "Feb 19, 2017 10:43:38 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -73,21 +73,16 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
-        "msg": [
-          {
-            "type": "TABLE",
-            "data": "SQLVersion\nMicrosoft SQL Server vNext (CTP1.3) - 14.0.304.138 (X64)   Feb 13 2017 16:49:12   Copyright (C) 2016 Microsoft Corporation. All rights reserved.  on Linux (Ubuntu 16.04.2 LTS)\n"
-          }
-        ]
+        "code": "ERROR",
+        "msg": []
       },
       "apps": [],
       "jobName": "paragraph_1479361552749_1858238533",
       "id": "20161116-214552_1314334679",
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Feb 18, 2017 4:27:37 PM",
-      "dateFinished": "Feb 18, 2017 4:27:40 PM",
-      "status": "FINISHED",
+      "dateStarted": "Feb 19, 2017 10:43:38 PM",
+      "dateFinished": "Feb 19, 2017 10:43:40 PM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
@@ -528,7 +523,7 @@
     "2C4JRQNNC:shared_process": [],
     "2C33NB2ZD:shared_process": [],
     "2C45BQVNP:shared_process": [],
-    "2C1GNXHBU:shared_process": []
+    "2C98HQY53:shared_process": []
   },
   "config": {
     "looknfeel": "default"

@@ -16,8 +16,8 @@ package org.apache.zeppelin.sqlserver;
 
 import org.apache.zeppelin.interpreter.Interpreter;
 import org.apache.zeppelin.interpreter.InterpreterContext;
-import org.apache.zeppelin.interpreter.InterpreterPropertyBuilder;
 import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.zeppelin.interpreter.InterpreterResult.Code;
 import org.apache.zeppelin.interpreter.thrift.InterpreterCompletion;
 import org.apache.zeppelin.scheduler.Scheduler;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
@@ -32,11 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
-import com.google.common.base.Function;
 
 /**
  * SQL Server interpreter v2 for Zeppelin.
@@ -61,22 +56,13 @@ public class SqlServerInterpreter extends Interpreter
   private static final String NOTEBOOK_CONNECTION_STYLE = "notebook";
   private static final String PARAGRAPH_CONNECTION_STYLE = "paragraph";
 
-  private static final String DEFAULT_JDBC_URL = "jdbc:sqlserver://localhost:1433";
-  private static final String DEFAULT_JDBC_USER_PASSWORD = "";
-  private static final String DEFAULT_JDBC_USER_NAME = "zeppelin";
-  private static final String DEFAULT_JDBC_DATABASE_NAME = "tempdb";
-  private static final String DEFAULT_JDBC_DRIVER_NAME =
-    "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-  private static final String DEFAULT_MAX_RESULT = "1000";
-  private static final String DEFAULT_CONNECTION_STYLE = NOTEBOOK_CONNECTION_STYLE;
-
-  private static final String SQLSERVER_SERVER_URL = "sqlserver.url";
-  private static final String SQLSERVER_SERVER_USER = "sqlserver.user";
-  private static final String SQLSERVER_SERVER_PASSWORD = "sqlserver.password";
-  private static final String SQLSERVER_SERVER_DATABASE_NAME = "sqlserver.database";
-  private static final String SQLSERVER_SERVER_DRIVER_NAME = "sqlserver.driver.name";
-  private static final String SQLSERVER_SERVER_MAX_RESULT = "sqlserver.max.result";
-  private static final String SQLSERVER_SERVER_CONNECTION_STYLE = "sqlserver.connections";
+  private static final String SQLSERVER_URL = "sqlserver.url";
+  private static final String SQLSERVER_USER = "sqlserver.user";
+  private static final String SQLSERVER_PASSWORD = "sqlserver.password";
+  private static final String SQLSERVER_DATABASE_NAME = "sqlserver.database";
+  private static final String SQLSERVER_DRIVER_NAME = "sqlserver.driver";
+  private static final String SQLSERVER_MAX_RESULT = "sqlserver.max.result";
+  private static final String SQLSERVER_CONNECTION_STYLE = "sqlserver.connections";
 
   private Logger _logger = LoggerFactory.getLogger(SqlServerInterpreter.class);
   private Connection _jdbcGlobalConnection;
@@ -109,13 +95,13 @@ public class SqlServerInterpreter extends Interpreter
 
     try
     {
-      String driverName = getProperty(SQLSERVER_SERVER_DRIVER_NAME);
-      String url = getProperty(SQLSERVER_SERVER_URL);
-      String user = getProperty(SQLSERVER_SERVER_USER);
-      String password = getProperty(SQLSERVER_SERVER_PASSWORD);
-      String database = getProperty(SQLSERVER_SERVER_DATABASE_NAME);
+      String driverName = getProperty(SQLSERVER_DRIVER_NAME);
+      String url = getProperty(SQLSERVER_URL);
+      String user = getProperty(SQLSERVER_USER);
+      String password = getProperty(SQLSERVER_PASSWORD);
+      String database = getProperty(SQLSERVER_DATABASE_NAME);
 
-      _maxRows = Integer.valueOf(getProperty(SQLSERVER_SERVER_MAX_RESULT));
+      _maxRows = Integer.valueOf(getProperty(SQLSERVER_MAX_RESULT));
 
       Class.forName(driverName);
 
@@ -215,7 +201,10 @@ public class SqlServerInterpreter extends Interpreter
   public void open() {
     _logger.info(String.format("Starting T-SQL Interpreter v %1s", VERSION));
 
-    String connectionStyle = getProperty(SQLSERVER_SERVER_CONNECTION_STYLE);
+    _logger.info("Driver: {}", getProperty(SQLSERVER_DRIVER_NAME));
+    _logger.info("Driver: {}", getProperty(SQLSERVER_DATABASE_NAME));
+
+    String connectionStyle = getProperty(SQLSERVER_CONNECTION_STYLE);
     _logger.info(String.format("Connection style: %1s", connectionStyle));
     _useNotebookConnection = !(connectionStyle.toLowerCase().equals(PARAGRAPH_CONNECTION_STYLE));
 
@@ -318,14 +307,14 @@ public class SqlServerInterpreter extends Interpreter
         else
           resultMessage.append("Command executed successfully.");
       }
-      result = InterpreterResult.Code.SUCCESS;
+      result = Code.SUCCESS;
     }
     catch (SQLException e) {
       _logger.error("Cannot execute SQL Server statement.", e);
       resultMessage = new StringBuilder();
       resultMessage.append("Cannot execute SQL Server statement.").append(NEWLINE);
       resultMessage.append(e.getMessage()).append(NEWLINE);
-      result = InterpreterResult.Code.ERROR;
+      result = Code.ERROR;
     }
 
     closeSQLServerConnection(jdbcConnection);
