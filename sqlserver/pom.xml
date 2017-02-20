@@ -30,7 +30,7 @@
   <groupId>org.apache.zeppelin</groupId>
   <artifactId>zeppelin-sqlserver</artifactId>
   <packaging>jar</packaging>
-  <version>0.6.2</version>
+  <version>0.7.1-SNAPSHOT</version>
   <name>Zeppelin: Sql Server Interpreter</name>
   <url>https://github.com/yorek/incubator-zeppelin</url>
 

@@ -30,7 +30,7 @@
       },
       "sqlserver.driver": {
         "envName": null,
-        "propertyName": "sqlserver.driver.name",
+        "propertyName": "sqlserver.driver",
         "defaultValue": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
         "description": "JDBC Driver Name"
       },
@@ -42,7 +42,7 @@
       },
       "sqlserver.connections": {
         "envName": null,
-        "propertyName": "sqlserver.max.result",
+        "propertyName": "sqlserver.connections",
         "defaultValue": "notebook",
         "description": "Notebook or Paragraph connection style"
       }
