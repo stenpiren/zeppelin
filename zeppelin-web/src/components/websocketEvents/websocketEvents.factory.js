@@ -89,7 +89,11 @@ function websocketEvents($rootScope, $websocket, $location, baseUrlSrv) {
           label: 'Cancel',
           action: function(dialog) {
             dialog.close();
-            $location.path('/');
+            // using $rootScope.apply to trigger angular digest cycle
+            // changing $location.path inside bootstrap modal wont trigger digest
+            $rootScope.$apply(function() {
+              $location.path('/');
+            });
           }
         }];
       }
@@ -148,6 +152,8 @@ function websocketEvents($rootScope, $websocket, $location, baseUrlSrv) {
           }
         }]
       });
+    } else if (op === 'SESSION_LOGOUT') {
+      $rootScope.$broadcast('session_logout', data);
     } else if (op === 'CONFIGURATIONS_INFO') {
       $rootScope.$broadcast('configurationsInfo', data);
     } else if (op === 'INTERPRETER_SETTINGS') {
