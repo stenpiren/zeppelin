@@ -358,15 +358,14 @@ function NotebookCtrl($scope, $route, $routeParams, $location, $rootScope,
   };
 
   $scope.isNoteRunning = function() {
-    var running = false;
     if (!$scope.note) { return false; }
     for (var i = 0; i < $scope.note.paragraphs.length; i++) {
-      if ($scope.note.paragraphs[i].status === 'PENDING' || $scope.note.paragraphs[i].status === 'RUNNING') {
-        running = true;
-        break;
+      const status = $scope.note.paragraphs[i].status;
+      if (status === 'PENDING' || status === 'RUNNING') {
+        return true;
       }
     }
-    return running;
+    return false;
   };
 
   $scope.killSaveTimer = function() {
@@ -437,7 +436,7 @@ function NotebookCtrl($scope, $route, $routeParams, $location, $rootScope,
     const trimmedNewName = newName.trim();
     if (trimmedNewName.length > 0 && $scope.note.name !== trimmedNewName) {
       $scope.note.name = trimmedNewName;
-      websocketMsgSrv.updateNote($scope.note.id, $scope.note.name, $scope.note.config);
+      websocketMsgSrv.renameNote($scope.note.id, $scope.note.name);
     }
   };
 
@@ -496,10 +495,16 @@ function NotebookCtrl($scope, $route, $routeParams, $location, $rootScope,
   };
 
   $scope.$on('addParagraph', function(event, paragraph, index) {
+    if ($scope.paragraphUrl) {
+      return;
+    }
     addPara(paragraph, index);
   });
 
   $scope.$on('removeParagraph', function(event, paragraphId) {
+    if ($scope.paragraphUrl) {
+      return;
+    }
     removePara(paragraphId);
   });
 
@@ -987,14 +992,16 @@ function NotebookCtrl($scope, $route, $routeParams, $location, $rootScope,
       $location.path('/');
     }
 
+    $scope.note = note;
+
     $scope.paragraphUrl = $routeParams.paragraphId;
     $scope.asIframe = $routeParams.asIframe;
     if ($scope.paragraphUrl) {
-      note = cleanParagraphExcept($scope.paragraphUrl, note);
+      $scope.note = cleanParagraphExcept($scope.paragraphUrl, note);
+      $scope.$broadcast('$unBindKeyEvent', $scope.$unBindKeyEvent);
       $rootScope.$broadcast('setIframe', $scope.asIframe);
     }
 
-    $scope.note = note;
     initializeLookAndFeel();
     //open interpreter binding setting when there're none selected
     getInterpreterBindings();
@@ -1009,6 +1016,11 @@ function NotebookCtrl($scope, $route, $routeParams, $location, $rootScope,
     $scope.killSaveTimer();
     $scope.saveNote();
 
+    document.removeEventListener('click', $scope.focusParagraphOnClick);
+    document.removeEventListener('keydown', $scope.keyboardShortcut);
+  });
+
+  $scope.$on('$unBindKeyEvent', function() {
     document.removeEventListener('click', $scope.focusParagraphOnClick);
     document.removeEventListener('keydown', $scope.keyboardShortcut);
   });

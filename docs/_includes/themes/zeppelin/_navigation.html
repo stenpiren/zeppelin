@@ -7,11 +7,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{BASE_PATH}}">
-            <img src="/assets/themes/zeppelin/img/zeppelin_logo.png" width="50" alt="I'm zeppelin">
-            <span style="vertical-align:middle">Zeppelin</span>
-            <span style="vertical-align:baseline"><small>{{site.ZEPPELIN_VERSION}}</small></span>
-          </a>
+          <div class="navbar-brand">
+            <a class="navbar-brand-main" href="{{site.production_url}}">
+              <img src="/assets/themes/zeppelin/img/zeppelin_logo.png" width="50" alt="I'm zeppelin">
+              <span style="vertical-align:middle">Zeppelin</span>
+            </a>
+            <a class="navbar-brand-version" href="{{BASE_PATH}}">
+              <span><small>{{site.ZEPPELIN_VERSION}}</small></span>
+            </a>
+          </div>
         </div>
         <nav class="navbar-collapse collapse" role="navigation">
           <ul class="nav navbar-nav">
@@ -101,6 +105,7 @@
                 <li class="title"><span><b>REST API</b><span></li>
                 <li><a href="{{BASE_PATH}}/rest-api/rest-interpreter.html">Interpreter API</a></li>
                 <li><a href="{{BASE_PATH}}/rest-api/rest-notebook.html">Notebook API</a></li>
+                <li><a href="{{BASE_PATH}}/rest-api/rest-notebookRepo.html">Notebook Repository API</a></li>
                 <li><a href="{{BASE_PATH}}/rest-api/rest-configuration.html">Configuration API</a></li>
                 <li><a href="{{BASE_PATH}}/rest-api/rest-credential.html">Credential API</a></li>
                 <li><a href="{{BASE_PATH}}/rest-api/rest-helium.html">Helium API</a></li>
