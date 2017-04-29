@@ -3,7 +3,7 @@
     {
       "text": "%md\n## Welcome to Zeppelin.\n##### This is a live tutorial, you can run the code yourself. (Shift-Enter to Run)",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:10:10 PM",
+      "dateUpdated": "Dec 17, 2016 3:32:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorHide": true,
@@ -22,10 +22,10 @@
         ],
         "enabled": true,
         "editorSetting": {
-          "language": "text",
-          "editOnDblClick": false
+          "language": "markdown",
+          "editOnDblClick": true
         },
-        "editorMode": "ace/mode/text",
+        "editorMode": "ace/mode/markdown",
         "tableHide": false
       },
       "settings": {
@@ -99,16 +99,17 @@
     {
       "text": "%sql \nselect age, count(1) value\nfrom bank \nwhere age \u003c 30 \ngroup by age \norder by age",
       "user": "anonymous",
-      "dateUpdated": "Dec 17, 2016 3:30:13 PM",
+      "dateUpdated": "Mar 17, 2017 12:18:02 PM",
       "config": {
         "colWidth": 4.0,
         "results": [
           {
             "graph": {
-              "mode": "table",
-              "height": 300.0,
+              "mode": "multiBarChart",
+              "height": 366.0,
               "optionOpen": false
-            }
+            },
+            "helium": {}
           }
         ],
         "enabled": true,
@@ -143,16 +144,17 @@
     {
       "text": "%sql \nselect age, count(1) value \nfrom bank \nwhere age \u003c ${maxAge\u003d30} \ngroup by age \norder by age",
       "user": "anonymous",
-      "dateUpdated": "Dec 17, 2016 3:30:16 PM",
+      "dateUpdated": "Mar 17, 2017 12:17:39 PM",
       "config": {
         "colWidth": 4.0,
         "results": [
           {
             "graph": {
-              "mode": "table",
-              "height": 300.0,
+              "mode": "multiBarChart",
+              "height": 294.0,
               "optionOpen": false
-            }
+            },
+            "helium": {}
           }
         ],
         "enabled": true,
@@ -195,16 +197,17 @@
     {
       "text": "%sql \nselect age, count(1) value \nfrom bank \nwhere marital\u003d\"${marital\u003dsingle,single|divorced|married}\" \ngroup by age \norder by age",
       "user": "anonymous",
-      "dateUpdated": "Dec 17, 2016 3:30:18 PM",
+      "dateUpdated": "Mar 17, 2017 12:18:18 PM",
       "config": {
         "colWidth": 4.0,
         "results": [
           {
             "graph": {
-              "mode": "table",
-              "height": 300.0,
+              "mode": "stackedAreaChart",
+              "height": 280.0,
               "optionOpen": false
-            }
+            },
+            "helium": {}
           }
         ],
         "enabled": true,
@@ -304,7 +307,7 @@
     {
       "text": "%md\n\nAbout bank data\n\n```\nCitation Request:\n  This dataset is public available for research. The details are described in [Moro et al., 2011]. \n  Please include this citation if you plan to use this database:\n\n  [Moro et al., 2011] S. Moro, R. Laureano and P. Cortez. Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology. \n  In P. Novais et al. (Eds.), Proceedings of the European Simulation and Modelling Conference - ESM\u00272011, pp. 117-121, Guimarães, Portugal, October, 2011. EUROSIS.\n\n  Available at: [pdf] http://hdl.handle.net/1822/14838\n                [bib] http://www3.dsi.uminho.pt/pcortez/bib/2011-esm-1.txt\n```",
       "user": "anonymous",
-      "dateUpdated": "Feb 18, 2017 4:11:04 PM",
+      "dateUpdated": "Dec 17, 2016 3:30:34 PM",
       "config": {
         "colWidth": 12.0,
         "editorHide": true,
@@ -319,10 +322,10 @@
         ],
         "enabled": true,
         "editorSetting": {
-          "language": "text",
-          "editOnDblClick": false
+          "language": "markdown",
+          "editOnDblClick": true
         },
-        "editorMode": "ace/mode/text",
+        "editorMode": "ace/mode/markdown",
         "tableHide": false
       },
       "settings": {
@@ -363,7 +366,9 @@
   ],
   "name": "Zeppelin Tutorial/Basic Features (Spark)",
   "id": "2A94M5J1Z",
-  "angularObjects": {},
+  "angularObjects": {
+    "2C73DY9P9:shared_process": []
+  },
   "config": {
     "looknfeel": "default"
   },
