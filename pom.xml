@@ -24,7 +24,7 @@
   <groupId>org.apache.zeppelin</groupId>
   <artifactId>zeppelin</artifactId>
   <packaging>pom</packaging>
-  <version>0.7.1-SNAPSHOT</version>
+  <version>0.7.1</version>
   <name>Zeppelin</name>
   <description>Zeppelin project</description>
   <url>http://zeppelin.apache.org</url>
@@ -59,8 +59,8 @@
     <module>angular</module>
     <module>shell</module>
     <module>file</module>
-    <module>python</module>
     <module>sqlserver</module>
+    <module>python</module>
     <module>zeppelin-web</module>
     <module>zeppelin-server</module>
     <module>zeppelin-distribution</module>

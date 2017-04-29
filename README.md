@@ -5,8 +5,6 @@ This fork of Apache Zeppelin is focused on specific support for SQL Server and S
 - [Apache Zeppelin](https://zeppelin.apache.org/)
 - [GitHub Page](https://github.com/apache/zeppelin)
 
-This branch is aligned with the [branch 0.7](https://github.com/apache/zeppelin/tree/branch-0.7)
-
 ## Project Status
 
 [![Build Status](https://travis-ci.org/yorek/zeppelin.svg?branch=master)](https://travis-ci.org/yorek/zeppelin)
@@ -19,11 +17,19 @@ This branch is aligned with the [branch 0.7](https://github.com/apache/zeppelin/
 
 ## Running Apache Zeppelin
 
-If you don't want to *build* Apache Zeppelin, but you just want to use it, you can do it by using the Docker Image:
+If you don't want to *build* Apache Zeppelin, but you just want to use it, you have two options. In both cases once you have Apache Zeppelin running, read the "Using Apache Zeppelin" section below to quickly start playing with it.
+
+### Using a Docker Image
+
+If you're into docker and/or you don't want to install Java on your machine, you can use the Docker Image here
 
 [Apache Zeppelin for SQL Server Docker Image](https://github.com/yorek/zeppelin-sqlserver-docker)
 
-Once you have Apache Zeppelin running, read the "Using Apache Zeppelin" section below to quickly start playing with it.
+### Native installation on Windows 10
+
+If you prefer to install it directly on your machine read the document here:
+
+[Running Apache Zeppelin for SQL Server on Windows 10 natively](https://medium.com/apache-zeppelin-stories/running-apache-zeppelin-for-sql-server-on-windows-10-natively-3fe2e6d9baa5)
 
 ## Building Apache Zeppelin
 
