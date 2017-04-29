@@ -1,9 +1,9 @@
 {
   "paragraphs": [
     {
-      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.7",
+      "text": "%md \n#SQL Server Interpreter for Apache Zeppelin 0.7.1",
       "user": "anonymous",
-      "dateUpdated": "Apr 28, 2017 9:10:44 PM",
+      "dateUpdated": "Apr 28, 2017 10:13:13 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -33,7 +33,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.7\u003c/h1\u003e\n"
+            "data": "\u003ch1\u003eSQL Server Interpreter for Apache Zeppelin 0.7.1\u003c/h1\u003e\n"
           }
         ]
       },
@@ -41,15 +41,15 @@
       "jobName": "paragraph_1479664732764_-1485738196",
       "id": "20161120-095852_1859830438",
       "dateCreated": "Nov 20, 2016 9:58:52 AM",
-      "dateStarted": "Apr 28, 2017 9:10:44 PM",
-      "dateFinished": "Apr 28, 2017 9:10:46 PM",
+      "dateStarted": "Apr 28, 2017 10:13:13 PM",
+      "dateFinished": "Apr 28, 2017 10:13:15 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "select @@version as SQLVersion",
       "user": "anonymous",
-      "dateUpdated": "Apr 28, 2017 9:10:48 PM",
+      "dateUpdated": "Apr 28, 2017 10:13:16 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -85,8 +85,8 @@
       "jobName": "paragraph_1479361552749_1858238533",
       "id": "20161116-214552_1314334679",
       "dateCreated": "Nov 16, 2016 9:45:52 AM",
-      "dateStarted": "Apr 28, 2017 9:10:48 PM",
-      "dateFinished": "Apr 28, 2017 9:10:51 PM",
+      "dateStarted": "Apr 28, 2017 10:13:17 PM",
+      "dateFinished": "Apr 28, 2017 10:13:19 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -94,7 +94,7 @@
       "title": "Get SQL Server Interpreter version and configuration information",
       "text": "%tsql\n:info",
       "user": "anonymous",
-      "dateUpdated": "Apr 28, 2017 9:15:47 PM",
+      "dateUpdated": "Apr 28, 2017 10:13:23 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -133,8 +133,8 @@
       "jobName": "paragraph_1479361587012_450689139",
       "id": "20161116-214627_163832689",
       "dateCreated": "Nov 16, 2016 9:46:27 AM",
-      "dateStarted": "Apr 28, 2017 9:15:47 PM",
-      "dateFinished": "Apr 28, 2017 9:15:47 PM",
+      "dateStarted": "Apr 28, 2017 10:13:24 PM",
+      "dateFinished": "Apr 28, 2017 10:13:24 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },

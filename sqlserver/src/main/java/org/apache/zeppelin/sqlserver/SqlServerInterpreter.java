@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * SQL Server interpreter v2 for Zeppelin.
+ * SQL Server interpreter for Zeppelin.
  *
  * CONNECTION_STYLE:
  *  Notebook
@@ -50,7 +50,7 @@ import java.io.IOException;
  */
 public class SqlServerInterpreter extends Interpreter
 {
-  private static final String VERSION = "0.7.0-1";
+  private static final String VERSION = "0.7.1";
 
   private static final char NEWLINE = '\n';
   private static final char TAB = '\t';
