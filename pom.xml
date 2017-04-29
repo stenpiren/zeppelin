@@ -59,8 +59,8 @@
     <module>angular</module>
     <module>shell</module>
     <module>file</module>
-    <module>python</module>
     <module>sqlserver</module>
+    <module>python</module>
     <module>zeppelin-web</module>
     <module>zeppelin-server</module>
     <module>zeppelin-distribution</module>

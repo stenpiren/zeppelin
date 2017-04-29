@@ -28,6 +28,8 @@ import java.sql.*;
 
 import java.util.*;
 
+import org.apache.zeppelin.user.UserCredentials;
+import org.apache.zeppelin.user.UsernamePassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,11 +183,53 @@ public class SqlServerInterpreter extends Interpreter
     {
       resultMessage
         .append(String.format("Interpreter version: %1s", VERSION))
-        .append(NEWLINE)
+        .append(NEWLINE);
+
+      resultMessage
         .append(String.format("Using notebook connection: %1s", _useNotebookConnection))
-        .append(NEWLINE)
+        .append(NEWLINE);
+
+      resultMessage
         .append(String.format("Apache Zeppelin scheduler type: %1s",
-                _useNotebookConnection ? "FIFO" : "Parallel"));
+                _useNotebookConnection ? "FIFO" : "Parallel"))
+        .append(NEWLINE);
+
+      resultMessage
+        .append(String.format("Note Id: %1s", ctx.getNoteId()))
+        .append(NEWLINE);
+
+      resultMessage
+        .append(String.format("Paragraph Id: %1s", ctx.getParagraphId()))
+        .append(NEWLINE);
+
+      resultMessage
+        .append(String.format("User: %1s", ctx.getAuthenticationInfo().getUser()))
+        .append(NEWLINE);
+
+      resultMessage
+        .append(String.format("ReplName: %1s", ctx.getReplName()))
+        .append(NEWLINE);
+
+      UserCredentials uc = ctx.getAuthenticationInfo().getUserCredentials();
+      if (uc != null)
+      {
+        String entity = ctx.getReplName();
+        UsernamePassword up = uc.getUsernamePassword(entity);
+
+        if (up != null) {
+          resultMessage
+                  .append(String.format("Credential/Username: %1s", up.getUsername()))
+                  .append(NEWLINE);
+        } else {
+          resultMessage
+                  .append("Credential/Username: getUsernamePassword() returned null")
+                  .append(NEWLINE);
+        }
+      } else {
+        resultMessage
+                .append("Credential/Username: getAuthenticationInfo() returned null")
+                .append(NEWLINE);
+      }
     }
 
     if (resultMessage.length() == 0)
@@ -202,7 +246,7 @@ public class SqlServerInterpreter extends Interpreter
     _logger.info(String.format("Starting T-SQL Interpreter v %1s", VERSION));
 
     _logger.info("Driver: {}", getProperty(SQLSERVER_DRIVER_NAME));
-    _logger.info("Driver: {}", getProperty(SQLSERVER_DATABASE_NAME));
+    _logger.info("Database: {}", getProperty(SQLSERVER_DATABASE_NAME));
 
     String connectionStyle = getProperty(SQLSERVER_CONNECTION_STYLE);
     _logger.info(String.format("Connection style: %1s", connectionStyle));
