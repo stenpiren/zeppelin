@@ -133,6 +133,16 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
     if (config.enabled === undefined) {
       config.enabled = true;
     }
+  
+    for (var idx in forms) {
+      if (forms[idx]) {
+        if (forms[idx].options) {
+          if (config.runOnSelectionChange === undefined) {
+            config.runOnSelectionChange = true;
+          }
+        }
+      }
+    }
 
     if (forms[Object.keys(forms)]) {
       if (forms[Object.keys(forms)].options && forms[Object.keys(forms)].type !== 'checkbox') {
