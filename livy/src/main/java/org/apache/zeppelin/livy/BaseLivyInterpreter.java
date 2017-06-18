@@ -21,6 +21,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.auth.AuthSchemeProvider;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.AuthSchemes;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.impl.auth.SPNegoSchemeFactory;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.zeppelin.interpreter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,24 +44,28 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.kerberos.client.KerberosRestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
+import javax.net.ssl.SSLContext;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Base class for livy interpreters.
  */
-public abstract class BaseLivyInterprereter extends Interpreter {
+public abstract class BaseLivyInterpreter extends Interpreter {
 
-  protected static final Logger LOGGER = LoggerFactory.getLogger(BaseLivyInterprereter.class);
+  protected static final Logger LOGGER = LoggerFactory.getLogger(BaseLivyInterpreter.class);
   private static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
   private static String SESSION_NOT_FOUND_PATTERN = "\"Session '\\d+' not found.\"";
 
@@ -54,14 +74,14 @@ public abstract class BaseLivyInterprereter extends Interpreter {
   private int sessionCreationTimeout;
   private int pullStatusInterval;
   protected boolean displayAppInfo;
-  private AtomicBoolean sessionExpired = new AtomicBoolean(false);
-  private LivyVersion livyVersion;
+  protected LivyVersion livyVersion;
+  private RestTemplate restTemplate;
 
   // keep tracking the mapping between paragraphId and statementId, so that we can cancel the
   // statement after we execute it.
   private ConcurrentHashMap<String, Integer> paragraphId2StmtIdMapping = new ConcurrentHashMap<>();
 
-  public BaseLivyInterprereter(Properties property) {
+  public BaseLivyInterpreter(Properties property) {
     super(property);
     this.livyURL = property.getProperty("zeppelin.livy.url");
     this.displayAppInfo = Boolean.parseBoolean(
@@ -70,6 +90,7 @@ public abstract class BaseLivyInterprereter extends Interpreter {
         property.getProperty("zeppelin.livy.session.create_timeout", 120 + ""));
     this.pullStatusInterval = Integer.parseInt(
         property.getProperty("zeppelin.livy.pull_status.interval.millis", 1000 + ""));
+    this.restTemplate = createRestTemplate();
   }
 
   public abstract String getSessionKind();
@@ -146,7 +167,7 @@ public abstract class BaseLivyInterprereter extends Interpreter {
           InterpreterUtils.getMostRelevantMessage(e));
     }
   }
-  
+
   @Override
   public void cancel(InterpreterContext context) {
     if (livyVersion.isCancelSupported()) {
@@ -268,7 +289,7 @@ public abstract class BaseLivyInterprereter extends Interpreter {
     }
   }
 
-  private LivyVersion getLivyVersion() throws LivyException {
+  protected LivyVersion getLivyVersion() throws LivyException {
     return new LivyVersion((LivyVersionResponse.fromJson(callRestAPI("/version", "GET")).version));
   }
 
@@ -312,12 +333,12 @@ public abstract class BaseLivyInterprereter extends Interpreter {
     } else {
       //TODO(zjffdu) support other types of data (like json, image and etc)
       String result = stmtInfo.output.data.plain_text;
-      
+
       // check table magic result first
       if (stmtInfo.output.data.application_livy_table_json != null) {
         StringBuilder outputBuilder = new StringBuilder();
         boolean notFirstColumn = false;
-        
+
         for (Map header : stmtInfo.output.data.application_livy_table_json.headers) {
           if (notFirstColumn) {
             outputBuilder.append("\t");
@@ -325,17 +346,17 @@ public abstract class BaseLivyInterprereter extends Interpreter {
           outputBuilder.append(header.get("name"));
           notFirstColumn = true;
         }
-        
+
         outputBuilder.append("\n");
         for (List<Object> row : stmtInfo.output.data.application_livy_table_json.records) {
           outputBuilder.append(StringUtils.join(row, "\t"));
-          outputBuilder.append("\n");          
-        }        
+          outputBuilder.append("\n");
+        }
         return new InterpreterResult(InterpreterResult.Code.SUCCESS,
-          InterpreterResult.Type.TABLE, outputBuilder.toString());
-      } else if (stmtInfo.output.data.image_png != null) {        
+            InterpreterResult.Type.TABLE, outputBuilder.toString());
+      } else if (stmtInfo.output.data.image_png != null) {
         return new InterpreterResult(InterpreterResult.Code.SUCCESS,
-          InterpreterResult.Type.IMG, (String) stmtInfo.output.data.image_png);
+            InterpreterResult.Type.IMG, (String) stmtInfo.output.data.image_png);
       } else if (result != null) {
         result = result.trim();
         if (result.startsWith("<link")
@@ -347,13 +368,11 @@ public abstract class BaseLivyInterprereter extends Interpreter {
       }
 
       if (displayAppInfo) {
-        //TODO(zjffdu), use multiple InterpreterResult to display appInfo
         InterpreterResult interpreterResult = new InterpreterResult(InterpreterResult.Code.SUCCESS);
-        interpreterResult.add(InterpreterResult.Type.TEXT, result);
+        interpreterResult.add(result);
         String appInfoHtml = "<hr/>Spark Application Id: " + sessionInfo.appId + "<br/>"
             + "Spark WebUI: <a href=\"" + sessionInfo.webUIAddress + "\">"
             + sessionInfo.webUIAddress + "</a>";
-        LOGGER.info("appInfoHtml:" + appInfoHtml);
         interpreterResult.add(InterpreterResult.Type.HTML, appInfoHtml);
         return interpreterResult;
       } else {
@@ -378,13 +397,90 @@ public abstract class BaseLivyInterprereter extends Interpreter {
     callRestAPI("/sessions/" + sessionInfo.id + "/statements/" + statementId + "/cancel", "POST");
   }
 
-  private RestTemplate getRestTemplate() {
+
+  private RestTemplate createRestTemplate() {
     String keytabLocation = property.getProperty("zeppelin.livy.keytab");
     String principal = property.getProperty("zeppelin.livy.principal");
-    if (StringUtils.isNotEmpty(keytabLocation) && StringUtils.isNotEmpty(principal)) {
-      return new KerberosRestTemplate(keytabLocation, principal);
+    boolean isSpnegoEnabled = StringUtils.isNotEmpty(keytabLocation) &&
+        StringUtils.isNotEmpty(principal);
+
+    HttpClient httpClient = null;
+    if (livyURL.startsWith("https:")) {
+      String keystoreFile = property.getProperty("zeppelin.livy.ssl.trustStore");
+      String password = property.getProperty("zeppelin.livy.ssl.trustStorePassword");
+      if (StringUtils.isBlank(keystoreFile)) {
+        throw new RuntimeException("No zeppelin.livy.ssl.trustStore specified for livy ssl");
+      }
+      if (StringUtils.isBlank(password)) {
+        throw new RuntimeException("No zeppelin.livy.ssl.trustStorePassword specified " +
+            "for livy ssl");
+      }
+      FileInputStream inputStream = null;
+      try {
+        inputStream = new FileInputStream(keystoreFile);
+        KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        trustStore.load(new FileInputStream(keystoreFile), password.toCharArray());
+        SSLContext sslContext = SSLContexts.custom()
+            .loadTrustMaterial(trustStore)
+            .build();
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+        HttpClientBuilder httpClientBuilder = HttpClients.custom().setSSLSocketFactory(csf);
+        RequestConfig reqConfig = new RequestConfig() {
+          @Override
+          public boolean isAuthenticationEnabled() {
+            return true;
+          }
+        };
+        httpClientBuilder.setDefaultRequestConfig(reqConfig);
+        Credentials credentials = new Credentials() {
+          @Override
+          public String getPassword() {
+            return null;
+          }
+
+          @Override
+          public Principal getUserPrincipal() {
+            return null;
+          }
+        };
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(AuthScope.ANY, credentials);
+        httpClientBuilder.setDefaultCredentialsProvider(credsProvider);
+        if (isSpnegoEnabled) {
+          Registry<AuthSchemeProvider> authSchemeProviderRegistry =
+              RegistryBuilder.<AuthSchemeProvider>create()
+                  .register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory())
+                  .build();
+          httpClientBuilder.setDefaultAuthSchemeRegistry(authSchemeProviderRegistry);
+        }
+
+        httpClient = httpClientBuilder.build();
+      } catch (Exception e) {
+        throw new RuntimeException("Failed to create SSL HttpClient", e);
+      } finally {
+        if (inputStream != null) {
+          try {
+            inputStream.close();
+          } catch (IOException e) {
+            LOGGER.error("Failed to close keystore file", e);
+          }
+        }
+      }
     }
-    return new RestTemplate();
+
+
+    if (isSpnegoEnabled) {
+      if (httpClient == null) {
+        return new KerberosRestTemplate(keytabLocation, principal);
+      } else {
+        return new KerberosRestTemplate(keytabLocation, principal, httpClient);
+      }
+    }
+    if (httpClient == null) {
+      return new RestTemplate();
+    } else {
+      return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+    }
   }
 
   private String callRestAPI(String targetURL, String method) throws LivyException {
@@ -395,7 +491,6 @@ public abstract class BaseLivyInterprereter extends Interpreter {
       throws LivyException {
     targetURL = livyURL + targetURL;
     LOGGER.debug("Call rest api in {}, method: {}, jsonData: {}", targetURL, method, jsonData);
-    RestTemplate restTemplate = getRestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/json");
     headers.add("X-Requested-By", "zeppelin");
@@ -422,6 +517,8 @@ public abstract class BaseLivyInterprereter extends Interpreter {
         if (cause.getResponseBodyAsString().matches(SESSION_NOT_FOUND_PATTERN)) {
           throw new SessionNotFoundException(cause.getResponseBodyAsString());
         }
+        throw new LivyException(cause.getResponseBodyAsString() + "\n"
+            + ExceptionUtils.getFullStackTrace(ExceptionUtils.getRootCause(e)));
       }
       throw new LivyException(e);
     }
@@ -581,11 +678,11 @@ public abstract class BaseLivyInterprereter extends Interpreter {
         @SerializedName("application/vnd.livy.table.v1+json")
         public TableMagic application_livy_table_json;
       }
-      
+
       private static class TableMagic {
         @SerializedName("headers")
         List<Map> headers;
-        
+
         @SerializedName("data")
         List<List> records;
       }
