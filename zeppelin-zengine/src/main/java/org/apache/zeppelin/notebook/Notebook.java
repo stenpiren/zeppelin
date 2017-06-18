@@ -338,7 +338,11 @@ public class Notebook implements NoteEventListener {
       note = notes.remove(id);
       folders.removeNote(note);
     }
-    interpreterSettingManager.removeNoteInterpreterSettingBinding(subject.getUser(), id);
+    try {
+      interpreterSettingManager.removeNoteInterpreterSettingBinding(subject.getUser(), id);
+    } catch (IOException e) {
+      logger.error(e.toString(), e);
+    }
     noteSearchService.deleteIndexDocs(note);
     notebookAuthorization.removeNote(id);
 
@@ -414,6 +418,10 @@ public class Notebook implements NoteEventListener {
   public void convertFromSingleResultToMultipleResultsFormat(Note note) {
     for (Paragraph p : note.paragraphs) {
       Object ret = p.getPreviousResultFormat();
+      if (ret != null && p.results != null) {
+        continue; // already converted
+      }
+
       try {
         if (ret != null && ret instanceof Map) {
           Map r = ((Map) ret);

@@ -30,7 +30,7 @@ import java.util.Properties;
 /**
  * Livy SparkSQL Interpreter for Zeppelin.
  */
-public class LivySparkSQLInterpreter extends BaseLivyInterprereter {
+public class LivySparkSQLInterpreter extends BaseLivyInterpreter {
 
   private LivySparkInterpreter sparkInterpreter;
 
@@ -219,6 +219,15 @@ public class LivySparkSQLInterpreter extends BaseLivyInterprereter {
   @Override
   public void close() {
     this.sparkInterpreter.close();
+  }
+
+  @Override
+  public int getProgress(InterpreterContext context) {
+    if (this.sparkInterpreter != null) {
+      return this.sparkInterpreter.getProgress(context);
+    } else {
+      return 0;
+    }
   }
 
   @Override

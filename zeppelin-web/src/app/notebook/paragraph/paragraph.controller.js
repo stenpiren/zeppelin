@@ -125,15 +125,15 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
 
   var initializeDefault = function(config) {
     var forms = $scope.paragraph.settings.forms;
-    
+
     if (!config.colWidth) {
       config.colWidth = 12;
     }
-  
+
     if (config.enabled === undefined) {
       config.enabled = true;
     }
-  
+
     for (var idx in forms) {
       if (forms[idx]) {
         if (forms[idx].options) {
@@ -480,7 +480,7 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
     var session = editor.getSession();
     var dirtyText = session.getValue();
     $scope.dirtyText = dirtyText;
-    $scope.$broadcast('startSaveTimer');
+    $scope.startSaveTimer();
     setParagraphMode(session, dirtyText, editor.getCursorPosition());
   };
 
@@ -562,6 +562,7 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
 
       $scope.editor.on('blur', function() {
         handleFocus(false);
+        $scope.saveParagraph($scope.paragraph);
       });
 
       $scope.editor.on('paste', function(e) {
@@ -1001,6 +1002,7 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
   $scope.$on('updateParagraph', function(event, data) {
     if (data.paragraph.id === $scope.paragraph.id &&
       (data.paragraph.dateCreated !== $scope.paragraph.dateCreated ||
+      data.paragraph.text !== $scope.paragraph.text ||
       data.paragraph.dateFinished !== $scope.paragraph.dateFinished ||
       data.paragraph.dateStarted !== $scope.paragraph.dateStarted ||
       data.paragraph.dateUpdated !== $scope.paragraph.dateUpdated ||
@@ -1114,7 +1116,8 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
         $scope.$emit('moveFocusToPreviousParagraph', paragraphId);
       } else if (editorHide && (keyCode === 40 || (keyCode === 78 && keyEvent.ctrlKey && !keyEvent.altKey))) { // down
         // move focus to next paragraph
-        $scope.$emit('moveFocusToNextParagraph', paragraphId);
+        // $timeout stops chaining effect of focus propogation
+        $timeout(() => $scope.$emit('moveFocusToNextParagraph', paragraphId))
       } else if (keyEvent.shiftKey && keyCode === 13) { // Shift + Enter
         $scope.run($scope.paragraph, $scope.getEditorValue());
       } else if (keyEvent.ctrlKey && keyEvent.altKey && keyCode === 67) { // Ctrl + Alt + c
