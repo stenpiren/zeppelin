@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -462,40 +463,45 @@ public class NotebookServer extends WebSocketServlet
   }
 
   private void broadcast(String noteId, Message m) {
+    List<NotebookSocket> socketsToBroadcast = Collections.emptyList();
     synchronized (noteSocketMap) {
       broadcastToWatchers(noteId, StringUtils.EMPTY, m);
       List<NotebookSocket> socketLists = noteSocketMap.get(noteId);
       if (socketLists == null || socketLists.size() == 0) {
         return;
       }
-      LOG.debug("SEND >> " + m.op);
-      for (NotebookSocket conn : socketLists) {
-        try {
-          conn.send(serializeMessage(m));
-        } catch (IOException e) {
-          LOG.error("socket error", e);
-        }
+      socketsToBroadcast = new ArrayList<>(socketLists);
+    }
+    LOG.debug("SEND >> " + m);
+    for (NotebookSocket conn : socketsToBroadcast) {
+      try {
+        conn.send(serializeMessage(m));
+      } catch (IOException e) {
+        LOG.error("socket error", e);
       }
     }
   }
 
   private void broadcastExcept(String noteId, Message m, NotebookSocket exclude) {
+    List<NotebookSocket> socketsToBroadcast = Collections.emptyList();
     synchronized (noteSocketMap) {
       broadcastToWatchers(noteId, StringUtils.EMPTY, m);
       List<NotebookSocket> socketLists = noteSocketMap.get(noteId);
       if (socketLists == null || socketLists.size() == 0) {
         return;
       }
-      LOG.debug("SEND >> " + m.op);
-      for (NotebookSocket conn : socketLists) {
-        if (exclude.equals(conn)) {
-          continue;
-        }
-        try {
-          conn.send(serializeMessage(m));
-        } catch (IOException e) {
-          LOG.error("socket error", e);
-        }
+      socketsToBroadcast = new ArrayList<>(socketLists);
+    }
+
+    LOG.debug("SEND >> " + m);
+    for (NotebookSocket conn : socketsToBroadcast) {
+      if (exclude.equals(conn)) {
+        continue;
+      }
+      try {
+        conn.send(serializeMessage(m));
+      } catch (IOException e) {
+        LOG.error("socket error", e);
       }
     }
   }

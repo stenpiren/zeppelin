@@ -187,6 +187,9 @@ public class ZeppelinServer extends Application {
     LOG.info("Starting zeppelin server");
     try {
       jettyWebServer.start(); //Instantiates ZeppelinServer
+      if (conf.getJettyName() != null) {
+        org.eclipse.jetty.http.HttpGenerator.setJettyVersion(conf.getJettyName());
+      }
     } catch (Exception e) {
       LOG.error("Error while running jettyServer", e);
       System.exit(-1);
@@ -349,6 +352,9 @@ public class ZeppelinServer extends Application {
 
     webApp.addFilter(new FilterHolder(CorsFilter.class), "/*",
         EnumSet.allOf(DispatcherType.class));
+
+    webApp.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed",
+            Boolean.toString(conf.getBoolean(ConfVars.ZEPPELIN_SERVER_DEFAULT_DIR_ALLOWED)));
 
     return webApp;
 

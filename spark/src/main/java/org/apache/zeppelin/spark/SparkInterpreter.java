@@ -215,7 +215,7 @@ public class SparkInterpreter extends Interpreter {
    */
   private boolean hiveClassesArePresent() {
     try {
-      this.getClass().forName("org.apache.spark.sql.hive.HiveSessionState");
+      this.getClass().forName("org.apache.spark.sql.hive.execution.InsertIntoHiveTable");
       this.getClass().forName("org.apache.hadoop.hive.conf.HiveConf");
       return true;
     } catch (ClassNotFoundException | NoClassDefFoundError e) {
@@ -343,9 +343,16 @@ public class SparkInterpreter extends Interpreter {
     for (Object k : intpProperty.keySet()) {
       String key = (String) k;
       String val = toString(intpProperty.get(key));
-      if (key.startsWith("spark.") && !val.trim().isEmpty()) {
-        logger.debug(String.format("SparkConf: key = [%s], value = [%s]", key, val));
-        conf.set(key, val);
+      if (!val.trim().isEmpty()) {
+        if (key.startsWith("spark.")) {
+          logger.debug(String.format("SparkConf: key = [%s], value = [%s]", key, val));
+          conf.set(key, val);
+        }
+        if (key.startsWith("zeppelin.spark.")) {
+          String sparkPropertyKey = key.substring("zeppelin.spark.".length());
+          logger.debug(String.format("SparkConf: key = [%s], value = [%s]", sparkPropertyKey, val));
+          conf.set(sparkPropertyKey, val);
+        }
       }
     }
 
@@ -474,9 +481,17 @@ public class SparkInterpreter extends Interpreter {
     for (Object k : intpProperty.keySet()) {
       String key = (String) k;
       String val = toString(intpProperty.get(key));
-      if (key.startsWith("spark.") && !val.trim().isEmpty()) {
-        logger.debug(String.format("SparkConf: key = [%s], value = [%s]", key, val));
-        conf.set(key, val);
+      if (!val.trim().isEmpty()) {
+        if (key.startsWith("spark.")) {
+          logger.debug(String.format("SparkConf: key = [%s], value = [%s]", key, val));
+          conf.set(key, val);
+        }
+
+        if (key.startsWith("zeppelin.spark.")) {
+          String sparkPropertyKey = key.substring("zeppelin.spark.".length());
+          logger.debug(String.format("SparkConf: key = [%s], value = [%s]", sparkPropertyKey, val));
+          conf.set(sparkPropertyKey, val);
+        }
       }
     }
     setupConfForPySpark(conf);
@@ -981,6 +996,7 @@ public class SparkInterpreter extends Interpreter {
   }
 
   private Results.Result interpret(String line) {
+    out.ignoreLeadingNewLinesFromScalaReporter();
     return (Results.Result) Utils.invokeMethod(
         intp,
         "interpret",
@@ -1231,7 +1247,6 @@ public class SparkInterpreter extends Interpreter {
     if (varName == null || varName.isEmpty()) {
       return;
     }
-
     Object lastObj = null;
     try {
       if (Utils.isScala2_10()) {
